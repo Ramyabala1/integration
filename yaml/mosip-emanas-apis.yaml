@@ -1,0 +1,2195 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: MOSIP-eManas Project APIs
+  description: The integration of eManas like Health Information System (HIS) platform with MOSIP ID and Authentication System has been done with the aim to support security and privacy requirements for health data exchange amongst HIS. The MOSIP-eManas like HIS interface (collection of APIs and services), Consent Management and PatientApp are designed and implemented to meet these requirements. This document describes the API specifications that facilitate secure and privacy-preserving healthcare service delivery by healthcare professionals at healthcare establishments as well as management of personal health records by patients. <br><br> The following is a collection of APIs with underlying services that enables efficient and easily extendable integration of healthcare establishments in the healthcare ecosystem with privacy measures (e.g. consent management) as well as security controls (e.g.ID and Auth systems).
+
+  contact:
+    name: E-Health Research Center (EHRC) @ IIIT-B 
+    url: https://ehrc.iiitb.ac.in/
+    email: ehrc@iiitb.ac.in
+  
+servers:
+  - url: http://65.1.166.98:8080/mhms_mosip/
+    description: Development Environment Server
+  
+  - url: http://65.1.149.7:8080/mhms_mosip/
+    description: MOSIP MEC DemConsent
+tags:
+  - name: Consent API
+    description: <p>for creation, retrieval, update and revocation of consent artifacts</p>
+    
+  - name: Patient API
+    description: <p>for new patient registration and registration of an existing patient to establishment</p>
+  
+  - name: Authorized Entity API
+    description: API is used to create a new Authorized Entity, update details of an existing Authorized Entity, assign Authorized Entity to a patient and take Authorized Entity confirmation.
+  
+  - name: Person Verification API
+    description: this api is invoked from third party system to verify identity of a person already registered in HIS.
+    
+  - name: Advance Directive API
+    description: this is to support a healthcare professional  to view the Advanced Directives given by the patient.
+    
+  - name: Access History API
+    description: This API is invoked by Patient App for providing transparency to the patient on usage of their health records. 
+  
+  - name: EHR API
+    description: supports viewing of existing health records by a person and creation of new health records of a patient by user. This API is also used to link EHR sub structures of a patient stored across various establishments with the PatientApp.
+    
+paths:
+  /initConsent:
+    post:
+      tags:
+        - Consent API
+      description: This method is called to send OTP for OTP based authentication of patient or authorized entity.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.consent.init
+                version: 
+                  type : string
+                  example: 1
+                person:
+                  type: object
+                  $ref: '#/components/schemas/person'  
+                method:
+                  type: string
+                  example: create
+                consentParameters:
+                  type: object
+                  $ref: '#/components/schemas/consentParameters'  
+                source: 
+                  type : string
+                  example: PatientApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP request processed successfully 
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/initResponse'
+            application/xml:
+              schema:
+                type: object
+                $ref: '#/components/schemas/initResponse'
+          
+  /createConsent:
+    post:
+      tags:
+        - Consent API
+      description: This method is called to create consent after successful OTP based authentication of a patient or their authorized entity.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.consent.create
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: PatientApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: Successfully created consent
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/createConsentResponse'
+            application/xml:
+              schema:
+                type: object
+                $ref: '#/components/schemas/createConsentResponse'
+          
+  /updateConsent:
+    post:
+      tags:
+        - Consent API
+      description: This method is called to update consent after successful OTP based authentication of patient or authorized entity.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.consent.update
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: PatientApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: Successfully updated consent
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/updateConsentResponse'
+            application/xml:
+              schema:
+                type: object
+                $ref: '#/components/schemas/updateConsentResponse'
+          
+  /revokeConsent:
+    post:
+      tags:
+        - Consent API
+      description: This method is called to revoke consent after successful OTP based authentication of patient or authorized entity.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.consent.revoke
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: PatientApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: Successfully revoked consent
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/revokeConsentResponse'
+            application/xml:
+              schema:
+                type: object
+                $ref: '#/components/schemas/revokeConsentResponse'
+          
+  
+  /retrieveConsent:
+    post:
+      tags:
+        - Consent API
+      description: To fetch active or inactive consent artifacts of a patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.consent.retrieve
+                version: 
+                  type : string
+                  example: 1
+                patientId: 
+                  type : string
+                  example: KA-02-223
+                status:
+                  type: string
+                  example: active
+                source: 
+                  type : string
+                  example: PatientApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200: 
+          description: The consent artifacts returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/retrieveConsentResponse'
+            application/xml:
+              schema:
+                type: object
+                $ref: '#/components/schemas/retrieveConsentResponse'
+                
+  /patient/initAuthentication:
+    post:
+      tags:
+        - Patient API
+      description: This method is invoked to send the OTP request for OTP based authentication to register a new patient. The request parameters would be decided based upon the ID Proof provided by the patient. The presently supported ID Proofs are ABARK, eHospital, MOSIP and None.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.patient.init
+                version: 
+                  type : string
+                  example: 1
+                service: 
+                  type : string
+                  example: mosip
+                id:
+                  type: string
+                  example: 987654321
+                mobile: 
+                  type : string
+                  example: 123456789
+                authType:
+                  type : array
+                  items:
+                    type: string
+                    example: DEMO, OTP, BIO
+                otpChannel:
+                  type : array
+                  items:
+                    type: string
+                    example: EMAIL, MOBILE
+                source: 
+                  type : string
+                  example: HospitalApp
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.patient.init
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  action: 
+                    type : string
+                    example: Please send auth credentials for authentication.
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+  
+  /patient/verifyAndGetDemogDetails:
+    post:
+      tags:
+        - Patient API
+      description: This method is invoked to perform OTP based authentication and return demographic details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.patient.verify
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: HospitalApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP based authentication done successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.patient.verify
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  response: 
+                    type : Object
+                    $ref: '#/components/schemas/demographicDetails'
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+                    
+  /createPatient:
+    post:
+      tags:
+        - Patient API
+      description: This method is invoked to store patient's demographic details and assign them a unique id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.patient.create
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                demographics:
+                  type: object
+                  $ref: '#/components/schemas/demographicDetails'
+                source: 
+                  type : string
+                  example: HospitalApp
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: Patient id created successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.patient.create
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  action: 
+                    type : string
+                    example: New Patient created Successfully
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+                    
+  /initRegisterPatientToEstablishment:
+    post:
+      tags:
+        - Patient API
+      description: This method is called to initialize registration of patient to establishment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.patient.establishment.init
+                version: 
+                  type : string
+                  example: 1
+                patient:
+                  type: object
+                  $ref: '#/components/schemas/patient'
+                establishment:
+                  type: object
+                  properties:
+                    establishmentld: 
+                      type : string
+                      example: 122345
+                    userId: 
+                      type : string
+                      example: 12345
+                source: 
+                  type : string
+                  example: HospitalApp
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP based authentication done successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.patient.establishment.init
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  action: 
+                    type : string
+                    example: Please send auth credentials for authentication
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'    
+              
+  /registerPatientToEstablishment:
+    post:
+      tags:
+        - Patient API
+      description: This method is invoked to perform OTP based authentication and return demographic details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.patient.establishment.register
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: HospitalApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP based authentication done successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.patient.establishment.register
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Patient Mapped
+                  action: 
+                    type : string
+                    example: Please note your token number
+                  response: 
+                    type : string
+                    example: 123e4567-e89b-12d3-a456
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'    
+  
+  /ae/initAuthentication:
+    post:
+      tags:
+        - Authorized Entity API
+      description: This method is invoked to send the OTP request for OTP based authentication to register a new Authorized Entity. The request parameters would be decided based upon the ID Proof provided by the Authorized Entity. The presently supported ID Proofs are  MOSIP and None.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.ae.init
+                version: 
+                  type : string
+                  example: 1
+                service: 
+                  type : string
+                  example: mosip
+                id:
+                  type: string
+                  example: 987654321
+                mobile: 
+                  type : string
+                  example: 123456789
+                authType:
+                  type : array
+                  items:
+                    type: string
+                    example: DEMO, OTP, BIO
+                otpChannel:
+                  type : array
+                  items:
+                    type: string
+                    example: EMAIL, MOBILE
+                source: 
+                  type : string
+                  example: HospitalApp
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.ae.init
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  action: 
+                    type : string
+                    example: Please send auth credentials for authentication.
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+  
+  /ae/verifyAndGetDemogDetails:
+    post:
+      tags:
+        - Authorized Entity API
+      description: This method is invoked to perform OTP based authentication and return demographic details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.ae.verify
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: HospitalApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP based authentication done successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.ae.verify
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  response: 
+                    type : Object
+                    $ref: '#/components/schemas/demographicDetails'
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+  
+  /createAE:
+    post:
+      tags:
+        - Authorized Entity API
+      description: This method is invoked to store demographic details of authorized entity and assign them unique identity.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.ae.create
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                demographics:
+                  type: object
+                  $ref: '#/components/schemas/demographicDetails' 
+                source: 
+                  type : string
+                  example: HospitalApp
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: Unique identity created successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.ae.create
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  action: 
+                    type : string
+                    example: New Authorized Entity created Successfully
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+  
+  /initAssignAEToPatient:
+    post:
+      tags:
+        - Authorized Entity API
+      description: This method is called to send OTP for OTP based authentication of patient.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.ae.patient.assign.init
+                version: 
+                  type : string
+                  example: 1
+                patient:
+                  type: object
+                  $ref: '#/components/schemas/patient'
+                aeDetails: 
+                  type: object
+                  properties:
+                    patientId:
+                      type: string
+                      example: KA-05-2022-000173
+                    aeId: 
+                      type: string
+                      example: KA-AE-2022-7137
+                consentParameters:
+                  type: object
+                  properties:
+                    patientId: 
+                      type : string
+                      example: KA-03-2021
+                    permission: 
+                      type : string
+                      example: VIEW
+                    purpose:
+                      type : array
+                      items:
+                        type: string
+                        example: All
+                    hip:
+                      type: string
+                      example: All
+                    hiu:
+                      type: object
+                      properties:
+                        hiuType: 
+                          type : string
+                          example: Individual
+                        individualId: 
+                          type : string
+                          example: KA-AE-01-000036
+                        individualName: 
+                          type : string
+                          example: Ramya
+                        individualRole: 
+                          type : string
+                          example: patientapp
+                    hresource:
+                      type: string
+                      example: All  
+                    validity:
+                      type: object
+                      properties:
+                        validityType: 
+                          type : string
+                          example: Duration
+                        createDate: 
+                          type : string
+                          example: '2022-06-06T06:28:34.294Z'
+                        validityEndDate: 
+                          type : string
+                          example: '2022-06-07T18:30:00.000Z'                          
+                source: 
+                  type : string
+                  example: HospitalApp
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'          
+      responses:
+        200:
+          description: OTP request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.ae.patient.assign.init
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  description: 
+                    type : string
+                    example: Successful
+                  action: 
+                    type : string
+                    example: Please send auth credentials for authentication
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+  
+  /assignAEToPatient:
+    post:
+      tags:
+        - Authorized Entity API
+      description: This method is called for OTP based authentication of patient.  On successful authentication, authorized entity is assigned to the patient.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.ae.patient.assign
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: HospitalApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP based authentication done successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.ae.patient.assign
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  response: 
+                    type : string
+                    example: consent id
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+  
+  /initAEConfirmation:
+    post:
+      tags:
+        - Authorized Entity API
+      description: This method is called to send otp for authorized entity as part of their confirmation to the mapping.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.ae.patient.confirm.init
+                version: 
+                  type : string
+                  example: 1
+                authorizedEntity:
+                  type: object
+                  $ref: '#/components/schemas/authorizedEntity'
+                confirmDetails:
+                  type: object
+                  properties:
+                    consentld: 
+                      type : string
+                      example: 122345
+                    patientId: 
+                      type : string
+                      example: 12345
+                source: 
+                  type : string
+                  example: HospitalApp
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP sent successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.patient.establishment.init
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  action: 
+                    type : string
+                    example: Please send auth credentials for authentication
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'    
+              
+  /AEConfirmation:
+    post:
+      tags:
+        - Authorized Entity API
+      description: This method is invoked to perform OTP based authentication and confirm authorized entity mapping to patient.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.ae.patient.confirm
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: HospitalApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP based authentication done successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.ae.patient.confirm
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+  
+  /initRegistration:
+    post:
+      tags:
+        - Person Verification API
+      description: This method is invoked to send the OTP request for OTP based authentication to register a person to a third party system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.init.verify.person
+                version: 
+                  type : string
+                  example: 1
+                person:
+                  type: object
+                  $ref: '#/components/schemas/person'
+                source: 
+                  type : string
+                  example: HospitalApp
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'            
+              
+      responses:
+        200:
+          description: OTP request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.init.verify.person
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  action: 
+                    type : string
+                    example: Please send auth credentials for authentication.
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+                    
+  /verifyPerson:
+    post:
+      tags:
+        - Person Verification API
+      description: This method is invoked to perform OTP based authentication of the person.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.verify.person
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: HospitalApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP based authentication done successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.init.verify.person
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+                    
+                    
+  /viewAD:
+    post:
+      tags:
+        - Advance Directive API
+      description: This method is invoked to view Advance Directive of a patient. 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type: string
+                  example: mosip-emanas.ad.view
+                version: 
+                  type: string
+                  example: 1.0
+                hiu: 
+                  type: object
+                  properties:
+                    hiuType:
+                      type: string
+                      example: INDIVIDUAL
+                    estId:
+                      type: string
+                      example: KA-05-MHE-000048
+                    estName:
+                      type: string
+                      example: Karthik Hospital
+                    individualId:
+                      type: string
+                      example: KA-04-MHP-01-000036
+                    individualName:
+                      type: string
+                      example: Ramya
+                    individualRole: 
+                      type: string
+                      example: Psychiatrist
+                patientId:
+                  type: string
+                  example: KA-05-2022-000153
+                consentId:
+                  type: string
+                  example: 1c67b598-8958-4a96-832e-877b03a4a84e
+                operation:
+                  type: string
+                  example: VIEW
+                purpose:
+                  type: array
+                  items:
+                    type: string
+                    example: ADVANCEDIRECTIVE
+                source : 
+                  type: string
+                  example: HospitalApp
+                licenseKey: 
+                  type: string
+                  example: 123e4567-e89b-12d3-a456
+                timeStamp:  
+                  type: string
+                  example: '2022-01-31T18:30:00.000Z'
+      responses:
+        200:
+          description: Advance directive request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.ad.view
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: View Advance Directive Successfully
+                  response: 
+                    type : object
+                    example: advance directive doc
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+                    
+  /viewAccessHistory:
+    post:
+      tags:
+        - Access History API
+      description: This method is invoked to view access history of patient's health data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type: string
+                  example: mosip-emanas.access.history.view
+                version: 
+                  type: string
+                  example: 1.0
+                patientId:
+                  type: string
+                  example: KA-05-2022-000153
+                source : 
+                  type: string
+                  example: PatientApp
+                licenseKey: 
+                  type: string
+                  example: 67-e89b-12d3-a456
+                timeStamp:  
+                  type: string
+                  example: '2022-01-31T18:30:00.000Z'
+      responses:
+        200:
+          description: Access History request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.access.history.view
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: View Access History Successful
+                  response: 
+                    type : string
+                    example: access history bundle
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+                    
+  /viewEHR:
+    post:
+      tags:
+        - EHR API
+      description: This method is invoked to view health records of a patient.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type: string
+                  example: mosip-emanas.ehr.view
+                version: 
+                  type: string
+                  example: 1.0
+                hiu: 
+                  type: object
+                  properties:
+                    hiuType:
+                      type: string
+                      example: INDIVIDUAL
+                    estId:
+                      type: string
+                      example: KA-05-MHE-000048
+                    estName:
+                      type: string
+                      example: Karthik Hospital
+                    individualId:
+                      type: string
+                      example: KA-04-MHP-01-000036
+                    individualName:
+                      type: string
+                      example: Ramya
+                    individualRole: 
+                      type: string
+                      example: Psychiatrist
+                aeId: 
+                  type: string
+                  example: KA-05-2022-000153
+                patientId:
+                  type: string
+                  example: KA-05-2022-000153
+                consentId:
+                  type: string
+                  example: 1c67b598-8958-4a96-832e-877b03a4a84e
+                operation:
+                  type: string
+                  example: VIEW
+                purpose:
+                  type: array
+                  items:
+                    type: string
+                    example: ADVANCEDIRECTIVE
+                hresource:
+                  type: object
+                  properties:
+                    resourceType: 
+                      type: string
+                      example: period
+                    from:
+                      type: string
+                      example: '2022-01-31T18:30:00.000Z'
+                    to:
+                      type: string
+                      example: '2022-06-06T06:28:34.294Z'
+                source : 
+                  type: string
+                  example: HospitalApp
+                licenseKey: 
+                  type: string
+                  example: 123e4567-e89b-12d3-a456
+                timeStamp:  
+                  type: string
+                  example: '2022-01-31T18:30:00.000Z'
+      responses:
+        200:
+          description: View EHR request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.ehr.view
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successfull
+                  response: 
+                    type : string
+                    example: health record bundle
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+  
+  /createEHR:
+    post:
+      tags:
+        - EHR API
+      description: This method is invoked to create health records of a patient.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type: string
+                  example: mosip-emanas.ehr.create
+                version: 
+                  type: string
+                  example: 1.0
+                hiu: 
+                  type: object
+                  properties:
+                    hiuType:
+                      type: string
+                      example: INDIVIDUAL
+                    estId:
+                      type: string
+                      example: KA-05-MHE-000048
+                    estName:
+                      type: string
+                      example: Karthik Hospital
+                    individualId:
+                      type: string
+                      example: KA-04-MHP-01-000036
+                    individualName:
+                      type: string
+                      example: Ramya
+                    individualRole: 
+                      type: string
+                      example: Psychiatrist
+                aeId: 
+                  type: string
+                  example: KA-05-2022-000153
+                patientId:
+                  type: string
+                  example: KA-05-2022-000153
+                consentId:
+                  type: string
+                  example: 1c67b598-8958-4a96-832e-877b03a4a84e
+                operation:
+                  type: string
+                  example: VIEW
+                purpose:
+                  type: array
+                  items:
+                    type: string
+                    example: ADVANCEDIRECTIVE
+                hresource:
+                  type: object
+                source : 
+                  type: string
+                  example: HospitalApp
+                licenseKey: 
+                  type: string
+                  example: 123e4567-e89b-12d3-a456
+                timeStamp:  
+                  type: string
+                  example: '2022-01-31T18:30:00.000Z'
+      responses:
+        200:
+          description: Create EHR request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.ehr.create
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Health Records Created Successfully
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+                    
+  /getEHRContextByHIP:
+    post:
+      tags:
+        - EHR API
+      description: This method is invoked to get EHR Context of patient from an establishment (HIP).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type: string
+                  example: mosip-emanas.get.ehr.context.hip
+                version: 
+                  type: string
+                  example: 1.0
+                hip:
+                  type: object
+                  properties:
+                    orgUUID: 
+                      type: string
+                      example: 9d274c55-4779-42af-9be9-4ee2c3d7e46b
+                    estName: 
+                      type: string
+                      example: Kartik Hospital
+                patientId: 
+                  type: string
+                  example: 1234
+                source : 
+                  type: string
+                  example: PatientApp
+                licenseKey: 
+                  type: string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp: 
+                  type: string
+                  example: '2019-02-15T07:23:19.590+05:30'
+      responses:
+        200:
+          description: Get EHR Context by HIP request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.get.ehr.context.hip
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successfull
+                  response: 
+                    type : string
+                    example: composition bundle
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+                    
+  /initAddEHRContextByHIP:
+    post:
+      tags:
+        - EHR API
+      description: This method is invoked to send OTP for authentication and linking of patient's EHR context.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type: string
+                  example: mosip-emanas.init.add.ehr.context.hip
+                version: 
+                  type: string
+                  example: 1.0
+                transactionId: 
+                  type: string
+                  example: 123
+                person : 
+                  type: object
+                  $ref: '#/components/schemas/person'
+                consentParameters: 
+                  type: object
+                  properties: 
+                    aeId: 
+                      type: string
+                      example: KA-05-2022-000153
+                    patientId:
+                      type: string
+                      example: KA-05-2022-000153
+                    operation:
+                      type: string
+                      example: VIEW
+                    purpose:
+                      type: array
+                      items:
+                        type: string
+                        example: All
+                    hip:
+                      type: object
+                      properties:
+                        estId: 
+                          type: string
+                          example: KA-05-MHE-000048
+                        estName: 
+                          type: string
+                          example: Karthik Hospital
+                    hiu: 
+                      type: object
+                      properties:
+                        hiuType: 
+                          type: string
+                          example: role
+                        estName: 
+                          type: string
+                          example: Patient App
+                        individualRole: 
+                          type: string
+                          example: patientrole
+                    hresource: 
+                      type: object
+                      properties:   
+                        resourceType: 
+                          type: string
+                          example: name
+                        episodeId : 
+                          type: string
+                          example: 12de-88jh-hs56
+                    validity: 
+                      type: object
+                      properties:
+                        validityType: 
+                          type: string
+                          example: duration
+                        createDate:
+                          type: string
+                          example: '2022-06-06T06:28:34.294Z'
+                        validityEndDate: 
+                          type: string
+                          example: '2022-06-07T18:30:00.000Z'
+                source : 
+                  type: string
+                  example: PatientApp
+                licenseKey: 
+                  type: string
+                  example: 123e4567-e89b-12d3-a456
+                timeStamp:  
+                  type: string
+                  example: '2022-01-31T18:30:00.000Z'
+      responses:
+        200:
+          description: OTP request processed successfully 
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.init.add.ehr.context.hip
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Successful
+                  action:
+                    type: string
+                    example: Please send auth credentials for authentication
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+                    
+  /addEHRContextByHIP:
+    post:
+      tags:
+        - EHR API
+      description: This method is invoked to perform OTP based authentication and linking of patient's EHR context.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                api: 
+                  type : string
+                  example: mosip-emanas.add.ehr.context.hip
+                version: 
+                  type : string
+                  example: 1
+                transactionId: 
+                  type : string
+                  example: 123
+                otp:
+                  type: string
+                  example: 220854
+                source: 
+                  type : string
+                  example: HospitalApp
+                licenseKey: 
+                  type : string
+                  example: 123e4567-e89b-12d3-a456
+                timestamp:
+                  type: string
+                  example: '2022-06-06T06:28:34.294Z'
+      responses:
+        200:
+          description: OTP based authentication done successfully.  
+          content:
+            application/json:
+              schema:
+                properties:
+                  api: 
+                    type : string
+                    example: mosip-emanas.add.ehr.context.hip
+                  version: 
+                    type : string
+                    example: 1
+                  code: 
+                    type : string
+                    example: 200
+                  message: 
+                    type : string
+                    example: Consent Created Successfully
+                  response: 
+                    type : string
+                    example: consent id
+                  errorCode: 
+                    type : string
+                    example: null
+                  transactionId: 
+                    type : string
+                    example: 123
+                  timestamp: 
+                    type : string
+                    example: '2019-02-15T07:23:19.590+05:30'
+               
+
+  
+
+components:
+  schemas:
+    authorizedEntity:
+      properties:
+        aeId: 
+          type: string
+          example: KA-03-2021
+        authService: 
+          type: string
+          example: eManas
+        serviceParameters:
+          type: object
+          properties:
+            individuald: 
+              type : string
+              example: 122345
+            individualType: 
+              type : string
+              example: VID
+            otpChannel: 
+              type : string
+              example: PHONE
+            authType:
+              type: array
+              items:
+                type : string
+                example: Demo,OTP, Bio
+                
+    patient:
+      properties:
+        patientId: 
+          type: string
+          example: KA-03-2021
+        authService: 
+          type: string
+          example: eManas
+        serviceParameters:
+          type: object
+          properties:
+            individuald: 
+              type : string
+              example: 122345
+            individualType: 
+              type : string
+              example: VID
+            otpChannel: 
+              type : string
+              example: PHONE
+            authType:
+              type: array
+              items:
+                type : string
+                example: Demo,OTP, Bio
+    
+    person:
+      properties:
+        personType: 
+          type: string
+          example: patient
+        personId: 
+          type: string
+          example: KA-03-2021
+        authService: 
+          type: string
+          example: eManas
+        serviceParameters:
+          type: object
+          properties:
+            individuald: 
+              type : string
+              example: 122345
+            individualType: 
+              type : string
+              example: VID
+            otpChannel: 
+              type : string
+              example: PHONE
+            authType:
+              type: array
+              items:
+                type : string
+                example: Demo,OTP, Bio
+    
+    consentParameters:
+      properties:
+        patientId: 
+          type : string
+          example: KA-03-2021
+        aeId: 
+          type : string
+          example: KA-AE-02-0123
+        permission: 
+          type : string
+          example: VIEW
+        purpose:
+          type : array
+          items:
+            type: string
+            example: IPBMR, OPBMR
+        hip:
+          type: object
+          properties:
+            estId: 
+              type : string
+              example: KA-05-MHE-000048
+            estName: 
+              type : string
+              example: Karthik Hospital
+        hiu:
+          type: object
+          properties:
+            estId:
+              type : string
+              example: KA-05-MHE-000048
+            estName: 
+              type : string
+              example: Karthik Hospital
+            hiuType: 
+              type : string
+              example: Individual
+            individualId: 
+              type : string
+              example: KA-04-MHP-01-000036
+            individualName: 
+              type : string
+              example: Ramya
+            individualRole: 
+              type : string
+              example: Psychiatrist
+        hresource:
+          type: object
+          properties:
+            type: 
+              type : string
+              example: period
+            from: 
+              type : string
+              example: '2022-01-31T18:30:00.000Z'
+            to: 
+              type : string
+              example: '2022-06-06T06:28:34.294Z'
+        validity:
+          type: object
+          properties:
+            validityType: 
+              type : string
+              example: Duration
+            createDate: 
+              type : string
+              example: '2022-06-06T06:28:34.294Z'
+            validityEndDate: 
+              type : string
+              example: '2022-06-07T18:30:00.000Z'
+        
+    initResponse:
+      properties:
+        api: 
+          type : string
+          example: mosip-emanas.consent.init
+        version: 
+          type : string
+          example: 1
+        code: 
+          type : string
+          example: 200
+        description: 
+          type : string
+          example: Successful
+        action: 
+          type : string
+          example: Please send auth credentials for authentication
+        transactionId: 
+          type : string
+          example: 123
+        timestamp: 
+          type : string
+          example: '2019-02-15T07:23:19.590+05:30'
+          
+    createConsentResponse:
+      properties:
+        api: 
+          type : string
+          example: mosip-emanas.consent.create
+        version: 
+          type : string
+          example: 1
+        code: 
+          type : string
+          example: 200
+        message: 
+          type : string
+          example: Consent generated successfully.
+        action: 
+          type : string
+          example: Please note the consent id.
+        response: 
+          type : string
+          example: 9999-ug556-78665-ok87
+        transactionId: 
+          type : string
+          example: 123
+        timestamp: 
+          type : string
+          example: '2019-02-15T07:23:19.590+05:30'
+          
+    updateConsentResponse:
+      properties:
+        api: 
+          type : string
+          example: mosip-emanas.consent.update
+        version: 
+          type : string
+          example: 1
+        code: 
+          type : string
+          example: 200
+        message: 
+          type : string
+          example: Consent updated successfully.
+        action: 
+          type : string
+          example: Please note the consent id.
+        response: 
+          type : string
+          example: 9999-ug556-78665-ok87
+        transactionId: 
+          type : string
+          example: 123
+        timestamp: 
+          type : string
+          example: '2019-02-15T07:23:19.590+05:30'  
+        
+    revokeConsentResponse:
+      properties:
+        api: 
+          type : string
+          example: mosip-emanas.consent.revoke
+        version: 
+          type : string
+          example: 1
+        code: 
+          type : string
+          example: 200
+        message: 
+          type : string
+          example: Consent revoked successfully.
+        action: 
+          type : string
+          example: Please note the consent id.
+        response: 
+          type : string
+          example: 9999-ug556-78665-ok87
+        transactionId: 
+          type : string
+          example: 123
+        timestamp: 
+          type : string
+          example: '2019-02-15T07:23:19.590+05:30'
+    
+    retrieveConsentResponse:
+      properties:
+        api: 
+          type : string
+          example: mosip-emanas.consent.retrieve
+        version: 
+          type : string
+          example: 1
+        code: 
+          type : string
+          example: 200
+        message: 
+          type : string
+          example: Successful
+        response: 
+          type : string
+          example: consent bundle
+        transactionId: 
+          type : string
+          example: 123
+        timestamp: 
+          type : string
+          example: '2019-02-15T07:23:19.590+05:30'
+          
+    demographicDetails:
+      properties:
+        prefix:
+          type : string
+          example: Dr.
+        givenName:
+          type : string
+          example: Ramya
+        middleName:
+          type : string
+          example: NRK
+        gender:
+          type : object
+          properties:
+            genderCode:
+              type: string
+              example: F
+            genderName:
+              type: string
+              example: Female
+        emergencyContact:
+          type : object
+          properties:
+            contactName:
+              type: string
+              example: Mr Father
+            telephone:
+              type: string
+              example: 123456789
+        phoneNumber:
+          type : string
+          example:
+        email:
+          type : string
+          example:
+        dateOfBirth:
+          type : string
+          example:
+        status:
+          type : string
+          example:
+        address:
+          type: array
+          items:
+            type: object
+            properties:
+              district:
+                type: string
+                example: Bengaluru Urban
+              city:
+                type: string
+                example: Bengaluru
+              state:
+                type: string
+                example: Karnataka
+              pinCode:
+                type: string
+                example: 560001
+              postalCode:
+                type: string
+                example: 560001
+              address1:
+                type: string
+                example: aaaa
+              address2:
+                type: string
+                example: aaa
+
+    
+
