@@ -1,0 +1,311 @@
+<div class="container-fluid mt-3 mb-n">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="backbtn text-right">
+                <button mat-raised-button class="" (click)="cancel()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- <div class="text-center mb-3">
+                <div class="common_headings"><b>Consent Request </b></div>
+                <div class="small_text f-12">HIU request Emanas for Consent where SMS sent to patient mobile</div>
+            </div> -->
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a (click)="cancel()">Home</a></li>
+                    <li class="breadcrumb-item active">Consent Request</li>
+                </ol>
+                <h5 class="common_heading">Create Consent </h5>
+            </nav>
+
+            <div class="cardbor">
+                <form #consentForm="ngForm" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+                    <!-- <div class="row">
+                        <div class="col-lg-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Permission Type</mat-label>
+                                <mat-select [(value)]="accessType">
+                                    <mat-option value="VIEW">VIEW</mat-option>
+                                    <mat-option value="STORE">STORE</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div> -->
+                    <div class="common_label_head mt-1">
+                        Patient ID Details
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>eManas id</mat-label>
+                                        <input required [(ngModel)]="patientid" maxlength="150" name="Patient ID" matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-6">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Auth Services</mat-label>
+                                        <mat-select [(value)]="verifyType">
+                                            <mat-option value="eManas">eManas</mat-option>
+                                            <mat-option value="MOSIP">MOSIP</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <span *ngIf="verifyType == 'MOSIP'" class="w-1">
+                                        <mat-form-field appearance="outline" class="mb--1">
+                                            <mat-label>UIN/VID Number</mat-label>
+                                                <input type="tel" #idNumbers required numbersOnly minlength="10"
+                                            maxlength="20" [(ngModel)]=idNumber name="idNumber"
+                                            matInput placeholder="Enter UIN/VID Number" />
+                                        </mat-form-field>
+                                    </span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <span *ngIf="verifyType == 'MOSIP'" class="w-1">
+                                        <mat-form-field appearance="outline" class="mb--1">
+                                            <mat-label>OTP Channel</mat-label>
+                                            <mat-select [(value)]="otpType">
+                                                <mat-option value="PHONE">Mobile</mat-option>
+                                                <mat-option value="EMAIL">Email</mat-option>
+                                                <mat-option value="EMAIL,PHONE">Both</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="common_label_head">
+                        Consent Details
+                    </h4>
+                    <div class="row mb-2 mt-2">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <mat-form-field required appearance="outline">
+                                    <mat-label>HIP REG-ID*</mat-label>
+                                    <input [(ngModel)]="hip" maxlength="150" name="HIP REG-ID" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field required appearance="outline">
+                                    <mat-label>HIU REG-ID*</mat-label>
+                                    <input [(ngModel)]="hiu" maxlength="150" name="HIU REG-ID" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group" *ngIf="accessType == 'VIEW'">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>From</mat-label>
+                                    <input required type="text" [(ngModel)]="from" (focus)="picker1.open()" name="to" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1" placeholder="From" autocomplete="off">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <mat-form-field required appearance="outline">
+                                    <mat-label>MHP REG ID</mat-label>
+                                    <input required [(ngModel)]="identifierValue" maxlength="150" name="MHP REG ID" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field required appearance="outline">
+                                    <mat-label>MHP Name</mat-label>
+                                    <input required [(ngModel)]="reqName" maxlength="150" name="MHP Name" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group" *ngIf="accessType == 'VIEW'">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>to</mat-label>
+                                    <input required type="text" [(ngModel)]="to" (focus)="picker1.open()" name="to" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1" placeholder="To" autocomplete="off">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <button mat-raised-button class="btn btn-secondary mr-2" (click)="cancel()">Home</button>
+                        </div>
+                        <div class="col-lg-6">
+                            <!-- <button type="submit" mat-raised-button class="btn btn-primary mr-2" [disabled]="consentForm.invalid" 
+                            (click)="searchMHMSID()">Create Consent</button> -->
+                            <button type="submit" mat-raised-button class="btn btn-primary mr-2" [disabled]="consentForm.invalid" (click)="save()">Create Consent</button>
+                        </div>
+                    </div>
+
+                    <div class="text-danger" *ngIf="timeOutMHMSID ">
+                        {{norecordsFound}}
+                    </div>
+                    <!-- <p class="small-text" *ngIf="showDec ">
+                        <mat-checkbox name="accept" [(ngModel)]="accept" required (change)="onChange($event)">
+                            The patient being searched is not registered in this Establishment. Please request for Consent from patient to register in this Establishment by clicking on Request Consent. OTP will be sent to patient’s mobile number by SMS
+                        </mat-checkbox>
+                    </p>
+                    <div class="text-center mt-3 mb-3" *ngIf="requestconsent">
+                        <div class="d-inline-block mr-10">
+                            <button mat-raised-button class="btn btn-primary mr-2" [disabled]="!accept" (click)="save()" id="bt">
+                                Request OTP
+                            </button>
+                        </div>
+                        <div class="d-inline-block mr-10">
+                            <button mat-raised-button (click)="hide()" class="btn-secondary mr-2">Cancel</button>
+                        </div>
+                    </div> -->
+
+                    <div class="row text-center" *ngIf='enableMessage'>
+                        <div class="col-md-12">
+                            <nav>
+                                <span class="d-inline-block w-2 mr-10">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>OTP</mat-label>
+                                        <input type="tel" #otpMobile numbersonly minlength="6" autocomplete="off"
+                                            maxlength="6" matInput placeholder="Enter OTP" />
+                                    </mat-form-field>
+                                </span>
+                                <span class="d-inline-block">
+                                    <div *ngIf="otpbtns">
+                                        <button mat-raised-button class="btn btn-manual"
+                                            (click)="verifyOTP(otpMobile)">Verify
+                                            OTP</button>
+                                    </div>
+                                </span>
+                            </nav>
+                            <div class="text-success f-12" style="margin-top: -1rem;">
+                                {{otpVerified}}
+                            </div>
+                            <div class="text-danger f-12" style="margin-top: -1rem;">
+                                {{otpNotMatch}}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- <div class="container-fluid" appNoRightClick>
+    <div class="row justify-content-md-center mt-x">
+        <div class="text-center mb-3">
+            <div class="common_headings"><b>Consent Request </b></div>
+            <div class="small_text f-12">HIU request Emanas for Consent where SMS sent to patient mobile</div>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-4">
+            <form #consentForm="ngForm" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Patient ID</mat-label>
+                        <input required [(ngModel)]="patientid" maxlength="150" name="Patient ID" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>HIU REG-ID*</mat-label>
+                        <input [(ngModel)]="hiu" maxlength="150" name="HIU REG-ID" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>HIP REG-ID*</mat-label>
+                        <input [(ngModel)]="hip" maxlength="150" name="HIP REG-ID" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>MHP REG ID</mat-label>
+                        <input required [(ngModel)]="identifierValue" maxlength="150" name="MHP REG ID" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>MHP Name</mat-label>
+                        <input required [(ngModel)]="reqName" maxlength="150" name="MHP Name" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf='enableDateRange'>
+                    <mat-form-field appearance="outline">
+                        <mat-label>From</mat-label>
+                        <input required type="text" [(ngModel)]="from" (focus)="picker1.open()" name="to" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1" placeholder="From" autocomplete="off">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf='enableDateRange'>
+                    <mat-form-field appearance="outline">
+                        <mat-label>to</mat-label>
+                        <input required type="text" [(ngModel)]="to" (focus)="picker1.open()" name="to" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1" placeholder="To" autocomplete="off">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <button mat-raised-button class="btn btn-secondary mr-2" (click)="cancel()">Home</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <button type="submit" mat-raised-button class="btn btn-primary mr-2" [disabled]="consentForm.invalid" (click)="searchMHMSID()">Create Consent</button>
+                    </div>
+                </div>
+
+                <div class="text-danger" *ngIf="timeOutMHMSID ">
+                    {{norecordsFound}}
+                </div>
+                <p class="small-text" *ngIf="showDec ">
+                    <mat-checkbox name="accept" [(ngModel)]="accept" required (change)="onChange($event)">
+                        The patient being searched is not registered in this Establishment. Please request for Consent from patient to register in this Establishment by clicking on Request Consent. OTP will be sent to patient’s mobile number by SMS
+                    </mat-checkbox>
+                </p>
+                <div class="text-center mt-3 mb-3" *ngIf="requestconsent">
+                    <div class="d-inline-block mr-10">
+                        <button mat-raised-button class="btn btn-primary mr-2" [disabled]="!accept" (click)="save()" id="bt">
+                            Request OTP
+                        </button>
+                    </div>
+                    <div class="d-inline-block mr-10">
+                        <button mat-raised-button (click)="hide()" class="btn-secondary mr-2">Cancel</button>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf='enableMessage'>
+                    <div class="col-md-12">
+                        <nav>
+                            <span class="d-inline-block w-2 mr-10">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>OTP</mat-label>
+                                    <input type="tel" #otpMobile numbersonly minlength="6" autocomplete="off"
+                                        maxlength="6" matInput placeholder="Enter OTP" />
+                                </mat-form-field>
+                            </span>
+                            <span class="d-inline-block">
+                                <div *ngIf="otpbtns">
+                                    <button mat-raised-button class="btn btn-manual"
+                                        (click)="verifyOTP(otpMobile)">Verify
+                                        OTP</button>
+                                </div>
+                            </span>
+                        </nav>
+                        <div class="text-success f-12" style="margin-top: -1rem;">
+                            {{otpVerified}}
+                        </div>
+                        <div class="text-danger f-12" style="margin-top: -1rem;">
+                            {{otpNotMatch}}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> -->

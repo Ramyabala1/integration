@@ -1,0 +1,392 @@
+<div class="container-fluid  mt-3 mb-n">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="backbtn text-right">
+                <button mat-raised-button class="" (click)="cancel()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a (click)="cancel()">Home</a></li>
+                    <li class="breadcrumb-item active">View Health Record</li>
+                </ol>
+                <h5 class="common_heading">View Health Record</h5>
+            </nav>
+
+            <!-- <div class="row justify-content-md-center mt-x">
+                <div class="row justify-content-md-center mt-x">
+                    <div class="text-center mb-3">
+                        <div class="common_headings"><b>Treatment List </b></div>
+                        <div class="small_text f-12"> The treatments are listed for the patients with the date range specified</div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="cardbor">
+                <form #getTreatmentForm="ngForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Patient ID</mat-label>
+                                <input required [(ngModel)]="patientid" maxlength="150" name="Patient ID" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field required appearance="outline">
+                                <mat-label>Consent ID</mat-label>
+                                <input required [(ngModel)]="consentID" maxlength="150" name="Consent ID" matInput>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <mat-form-field appearance="outline">
+                            <mat-label>From</mat-label>
+                            <input required type="text" [(ngModel)]="from" (focus)="picker1.open()" name="to" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1" placeholder="From" autocomplete="off">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                            <mat-label>to</mat-label>
+                            <input required type="text" [(ngModel)]="to" (focus)="picker2.open()" name="to" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker2" placeholder="To" autocomplete="off">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                    </div> -->
+                    <h3 class="common_heading">Health Record Type</h3>
+                    <div>
+                        <div class="row mt-1">
+                            <div class="col-lg-4" *ngFor="let  hiType of hiTypes; let i=index">
+                                <mat-checkbox [id]="hiType.value" (change)="onChange(hiType, $event)" [name]="hiType.value">{{ hiType }}</mat-checkbox><br />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <label class="field-label">Record Type</label>
+                        <div class="row mt-2">
+                            <div *ngFor="let  hiType of hiTypes">
+                                <input type="checkbox" (change)="onChange(hiType, $event.target.checked)"> {{ hiType }}
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="row text-center mt-2">
+                        <div class="col-lg-6">
+                            <button mat-raised-button class="btn btn-secondary mr-2" (click)="cancel()">Home</button>
+                        </div>
+                        <!-- <div class="col-lg-6">
+                            <button type="submit" mat-raised-button class="btn btn-primary mr-2" [disabled]="getTreatmentForm.invalid" (click)="getBMR()">View Treatment</button>
+                        </div> -->
+                        <div class="col-lg-6">
+                            <button type="submit" mat-raised-button class="btn btn-primary mr-2" (click)="getBMR()">View Treatment</button>
+                        </div>
+                    </div>
+                    <br />
+                    <!-- <div class="row">
+                        <div class="col-lg-6">
+                            <a [routerLink]="" style="margin: 10px;" (click)="fetchFhirRequest()"><u>View Fhir Request</u></a>
+                        </div>
+                        <div class="col-lg-6">
+                            <button mat-raised-button class="btn btn-secondary mr-2" (click)="cancel()">Home</button>
+                        </div>
+                    </div> -->
+                    <!-- <div class="form-group" *ngIf="showFhirResponse">
+                        <mat-form-field appearance="outline">
+                            <mat-label><b>Response For Treatment</b></mat-label>
+                            <textarea [(ngModel)]="this.response" name="textrequest" rows="3" matInput matAutosizeMinRows=1 matAutosizeMaxRows=100000 style="width:1000px; height: 300px;"></textarea></mat-form-field>
+                    </div> -->
+                    <!-- <div class="form-group" *ngIf="showFhirRequest">
+                        <mat-form-field appearance="outline">
+                            <mat-label><b>Fhir Request</b></mat-label>
+                            <textarea [(ngModel)]="this.request" name="textrequest" rows="3" matInput matAutosizeMinRows=1 matAutosizeMaxRows=100000 style="width:1000px; height: 100px;"></textarea></mat-form-field>
+                    </div> -->
+                </form>
+                <div>
+                    <div>
+                        <mat-accordion multi="true" *ngFor="let ipdis of IPArray" class="">
+                            <mat-expansion-panel class="mb-3">
+                                <mat-expansion-panel-header collapsedHeight="auto" expandedHeight="auto">
+                                    <mat-panel-title class="pt-3 pb-3">
+                                        <div class="row">
+                                            <div class="col-md-4">{{ ipdis.Assessmentdate | date: "dd/MM/yyyy" }}</div>
+                                            <div class="col-md-4">IP BMR</div>
+                                            <div class="col-md-4">{{ ipdis.Hospitalname }}</div>
+                                        </div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <hr />
+                                <div>
+                                    <p class="common_label_head">Assessment Details</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text">
+                                            <b>Mode of Admission</b>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{ ipdis.Assessmentname }} : {{ ipdis.Sectionofadmission }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-6">
+                                        <p class="common_text">
+                                            <b>Next Assessment Date</b>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-8 col-6">
+                                        <p class="common_text">{{ ipdis.Assessmentdate | date: "dd/MM/yyyy" }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Chief Complaints</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <div *ngIf="ipdis.Complaints">
+                                            <p class="common_text">{{ ipdis.Complaints }} : {{ ipdis.Pattern }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>History of Present Illness</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <div>
+                                            <p class="common_text">{{ ipdis.Pastprescription }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Vitals</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{ ipdis.SummaryofVitals }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Mental Examination</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{ ipdis.SummaryofMentalStatusExam }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Physical Examination</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{ ipdis.StatusofGeneralExam }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Investigation</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{ ipdis.SummaryofInvestigations }}</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="ipdis.DiagnosisDisplay">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>{{ diag.diagnosticCertainity }}</b>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{ diag.problemCode }} : {{ diag.problemDiagnosis }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Course in the Hospital</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <div>
+                                            <p class="common_text">{{ ipdis.CourseinHospital }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Prescription</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <div *ngFor="let prescript of ipdis.medicationDisplay">
+                                            <p class="common_text">{{ prescript.medName | uppercase }} {{ prescript.medDose }}, {{ prescript.timingDescription }}, {{ prescript.directionDuration }}, {{ prescript.overallDirectionDescription }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <app-ip-view [ipdis]="ipdis.data.Assessment"></app-ip-view>
+                            <app-discharge-view *ngIf="ipdis.Ditem !==''" [ipdis]="ipdis.data.Discharge"></app-discharge-view> -->
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <mat-accordion multi="true" *ngFor="let opdis of OPArray" class="">
+                            <mat-expansion-panel class="mb-3">
+                                <mat-expansion-panel-header collapsedHeight="auto" expandedHeight="auto">
+                                    <mat-panel-title class="pt-3 pb-3">
+                                        <div class="row common_text1">
+                                            <div class="col-md-4">{{ opdis.date_created }}</div>
+                                            <div class="col-md-4">OP BMR</div>
+                                            <div class="col-md-4">{{ opdis.Hospitalname }}</div>
+                                            <!-- <div class="col-md-3">OP BMR</div> -->
+                                        </div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <hr />
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>MHP Name</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">Dr. {{opdis.author}} </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Illness Summary</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{opdis.illnessSummary}} </p>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="row" *ngFor="let diag of opdis.diagnosticCertainity"> -->
+                                <div class="row" *ngIf="opdis.diagnosticCertainity">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>{{opdis?.diagnosticCertainity}}</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{opdis.problemCode}} : {{opdis.problemDiagnosis}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Complaints & Duration</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <div *ngIf="opdis.symptomName">
+                                            <p class="common_text">{{opdis?.symptomName}} -- {{opdis?.pattern}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>History</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{opdis.clinicalHistory}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Additional Notes</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{opdis.treatmentInstructions}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-5">
+                                        <p class="common_text"><b>Improvement Status</b></p>
+                                    </div>
+                                    <div class="col-md-8 col-7">
+                                        <p class="common_text">{{opdis.improvementStatus}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Prescription</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+
+                                        <div *ngFor="let prescript of opdis.medicationDisplay">
+                                            <p class="common_text">{{prescript.medName | uppercase}} {{prescript.medDose}}, {{prescript.timingDescription}}, {{prescript.directionDuration}}, {{prescript.overallDirectionDescription}}</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="opdis.followUpDate">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Follow Up</b></p>
+                                    </div>
+                                    <!-- <div class="col-md-8 mt--1x">
+                                      <p class="common_text">
+                                          {{opdis.followUpDate | date: 'dd/MM/yyyy'}}
+                                      </p>
+                                  </div> -->
+                                    <div class="col-md-8 col-7 mt--1x">
+                                        <div class="row ml-1">
+                                            <p class="common_text">{{opdis.followUpDate | date: 'dd/MM/yyyy'}}
+                                            </p>
+                                            <p class="hintsfollowup" *ngIf="opdis.serviceNarrative==='true'">
+                                                *Patient selected for Follow-up by 104 Arogyavani
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4" *ngIf="opdis.reasonDescription">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Comorbid Diagnosis</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{opdis.reasonDescription}} </p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="opdis.reasonOfReferral">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Reason For Referral</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{opdis.reasonOfReferral}}</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="opdis.referredDoctor">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Referred Doctor</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{opdis.referredDoctor}}</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="opdis.referredOrganization">
+                                    <div class="col-md-4">
+                                        <p class="common_text"><b>Referred Hospital</b></p>
+                                    </div>
+                                    <div class="col-md-8 mt--1x">
+                                        <p class="common_text">{{opdis.referredOrganization}}</p>
+                                    </div>
+                                </div>
+
+                                <!-- <app-ip-view [ipdis]="ipdis.data.Assessment"></app-ip-view>
+                            <app-discharge-view *ngIf="ipdis.Ditem !==''" [ipdis]="ipdis.data.Discharge"></app-discharge-view> -->
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

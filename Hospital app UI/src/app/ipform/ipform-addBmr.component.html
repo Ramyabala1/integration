@@ -1,0 +1,780 @@
+<div class="container-fluid" appNoRightClick>
+    <div class="row justify-content-md-center mt-x">
+        <div class="text-center mb-3">
+            <div class="common_headings"><b>In Patient Basic Medical Record </b></div>
+        </div>
+    </div>
+    <div class="row justify-content">
+        <div class="col-lg-12">
+            <form #clinicalForm="ngForm" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+                <div class="card mt-3">
+                    <div class="row mb-2 backsides">
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Patient ID*</mat-label>
+                                <input [(ngModel)]="ipModel.patientID" maxlength="150" name="Patient ID"  (blur)="checkMandatory()" matInput >
+                            </mat-form-field>
+
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Consent ID*</mat-label>
+                                <input [(ngModel)]="ipModel.consentID" maxlength="150" name="Consent ID" (blur)="checkMandatory()" matInput>
+                            </mat-form-field>
+
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Org Reg ID*</mat-label>
+                                <input [(ngModel)]="ipModel.orgId" maxlength="150" name="Org Reg ID" (blur)="checkMandatory()" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Org Name*</mat-label>
+                                <input [(ngModel)]="ipModel.orgName" maxlength="150" name="Org Name" (blur)="checkMandatory()" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>MHP Reg ID*</mat-label>
+                                <input [(ngModel)]="ipModel.docId" maxlength="150" name="MHP Reg ID" (blur)="checkMandatory()" matInput>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardbor mt-3">
+
+                    <div class="common_label_head">Guardian Details</div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Guardian Name*</mat-label>
+                                <input nameOnly maxlength="75" [(ngModel)]="gname" name="gname" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Guardian Relation*</mat-label>
+                                <input alphaOnly maxlength="50" [(ngModel)]="gphone" name="gphone" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Admission Date</mat-label>
+                                <input  [max]="today" [(ngModel)]="admitDate"
+                                    (ngModelChange)="mergeAdmitDate()" (focus)="picker.open()" name="admitDate" matInput
+                                    [matDatepicker]="picker" readonly>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Admission Time</mat-label>
+                                <input type="time" [(ngModel)]="adTime1" name="adTime1" (change)="mergeAdmitDate()"
+                                    matInput />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <legend class="common_label_head">IP Admission</legend>
+                <div class="card">
+                    <h5 class="common_label_head">Section of Admission</h5>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-12 col-xs-12">
+                            <label>Admitted Under MHCA 2017 Section*</label>
+                        </div>
+                        <div class="col-12 col-xs-12">
+                            <mat-radio-group name="capacity" class="capacity-radio-group"
+                                [(ngModel)]="ipModel.capacity">
+                                <mat-radio-button class="capacity-radio-button" name="capacity-radio"
+                                    value="Section 86">Section 86 (Independent Admission)</mat-radio-button><br />
+                                <mat-radio-button class="capacity-radio-button" name="capacity-radio"
+                                    value="Section 87">Section 87 (Admission of Minor)</mat-radio-button><br />
+                                <mat-radio-button class="capacity-radio-button" name="capacity-radio"
+                                    value="Section 89">Section 89 (Supported Admission)</mat-radio-button><br />
+                                <mat-radio-button class="capacity-radio-button" name="capacity-radio"
+                                    value="Section 90">Section 90 (Extended Supported Admission)</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <h5 class="common_label_head mt-1">Clinical Profile</h5>
+
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr *ngFor="let comField of complaintArray; let i = index" class="noBorder row mb-2">
+                                    <td class="col-6 pr-0">
+                                        <input [(ngModel)]="comField.complaint" class="form-control" type="text"
+                                            name="{{comField.complaint}}">
+                                    </td>
+                                    <td class="col-6">
+                                        <span class="d-inline-block w-1">
+                                            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="comField.duration"
+                                                class="form-control" type="text" name="{{comField.duration}}">
+                                        </span>
+                                        <span class="d-inline-block ml-2">
+                                            <button matTooltip={{deleteFileMessage}} class="btns mids common_heading"
+                                                type="button" (click)="deletecomplaintValue(i)">
+                                                <mat-icon class="primary-icon">delete</mat-icon>
+                                            </button>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row mb-2 backsides">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Complaints*</mat-label>
+                                <input [(ngModel)]="newComplaint.complaint" name="complaint" (change)="addComplaints()"
+                                    matInput placeholder="Complaints" maxlength="100">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Duration*</mat-label>
+                                <input #duration="ngModel" [(ngModel)]="newComplaint.duration"
+                                    (keyup)="manageDuration(duration)" name="duration" (change)="addComplaints()"
+                                    matInput placeholder="Ex- 1 week or 1 month" maxlength="50">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>History of Present Illness</mat-label>
+                            <textarea (keydown.enter)="$event.stopPropagation()" [(ngModel)]="ipModel.history"
+                                name="history" rows="3" matInput placeholder="Enter History information"
+                                matAutosizeMinRows="1" matAutosizeMaxRows="5" matTextareaAutosize maxlength="2000"
+                                onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Summary of vitals</mat-label>
+                            <textarea (keydown.enter)="$event.stopPropagation()" [(ngModel)]="ipModel.vitals"
+                                name="vitals" matInput rows="3" matAutosizeMinRows="1" matAutosizeMaxRows="5"
+                                matTextareaAutosize placeholder="Summary of vitals" maxlength="2000"
+                                onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')"></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Summary of General Physical Examination</mat-label>
+                            <textarea (keydown.enter)="$event.stopPropagation()" [(ngModel)]="ipModel.physical_exam"
+                                name="physical_exam" matInput rows="3" matAutosizeMinRows="1" matAutosizeMaxRows="5"
+                                matTextareaAutosize placeholder="Enter Summary" maxlength="2000"
+                                onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Summary Mental status Examination</mat-label>
+                            <textarea (keydown.enter)="$event.stopPropagation()" [(ngModel)]="ipModel.mental_status"
+                                name="mental_status" matInput rows="3" matAutosizeMinRows="1" matAutosizeMaxRows="5"
+                                matTextareaAutosize placeholder="Mental status Examination Summary" maxlength="2000"
+                                onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Summary of Investigation</mat-label>
+                            <textarea (keydown.enter)="$event.stopPropagation()" [(ngModel)]="ipModel.investigation"
+                                name="investigation" matInput rows="3" matAutosizeMinRows="1" matAutosizeMaxRows="5"
+                                matTextareaAutosize placeholder="Summary of Investigation" maxlength="2000"
+                                onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')"></textarea>
+                        </mat-form-field>
+                    </div>
+
+
+                </div>
+                <div class="card mt-3">
+                    <h5 class="common_label_head">Diagnosis</h5>
+                    <div class="hscrolli">
+                        <table class="tbl">
+                            <tbody>
+                                <tr class="noBorder row mb-2 medboxi1"
+                                    *ngFor="let diagnose of diagnosisArray; let i = index">
+                                    <td class="col-3 pr-0 w-2a">
+                                        <div class="form-control">
+                                            <mat-select [(ngModel)]="diagnose.diagnosisType"
+                                                [ngModelOptions]="{standalone: true}" name="{{diagnose.diagnosisType}}">
+                                                <mat-option *ngFor="let diagType of diagnosisTypes" [value]="diagType">
+                                                    {{ diagType }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </td>
+                                    <td class="col-6 pr-0 w-2a">
+                                        <input [ngModelOptions]="{standalone: true}" [(ngModel)]="diagnose.description"
+                                            class="form-control" type="text" name="{{diagnose.description}}">
+                                    </td>
+                                    <td class="col-3 pl-1 w-2a">
+                                        <span class="d-inline-block w-1">
+                                            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="diagnose.icdCode"
+                                                class="form-control" type="text" name="{{diagnose.icdCode}}">
+                                        </span>
+                                        <span class="d-inline-block ml-2">
+                                            <button matTooltip={{deleteFileMessage}} class="btns common_heading mids"
+                                                type="button" (click)="deleteDiagnosisValue(i)">
+                                                <mat-icon class="primary-icon">delete</mat-icon>
+                                            </button>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row mb-2 backsides">
+                        <div class="col-md-3">
+                            <button class="input_button" #menuTrigger="matMenuTrigger" (focus)="opensMenu(menuTrigger)"
+                                [matMenuTriggerFor]="menu">{{toggleDiagnosisType}}
+                                <mat-icon>keyboard_arrow_down</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item *ngFor="let diagType of diagnosisTypes"
+                                    (click)="addDiagnosisType(diagType)">{{diagType}}</button>
+                            </mat-menu>
+
+
+                        </div>
+
+                        <div class="col-md-6 pr-1">
+                            <mat-form-field appearance="outline">
+                                <mat-label>ICD Description</mat-label>
+                                <input [(ngModel)]="newDiagnosis.description" [ngModelOptions]="{standalone: true}"
+                                    (focus)="toggleFocus()" (change)="addDiagnosis()" [matAutocomplete]="auto1"
+                                    #description matInput placeholder="Diagnosis Description" maxlength="300">
+                            </mat-form-field>
+                            <mat-autocomplete class="extended1" #auto1="matAutocomplete"
+                                (optionSelected)="onSelectionChanged($event)">
+                                <mat-option *ngFor="let option1 of icdDesc" [value]="option1">
+                                    {{option1.code}} - {{option1.description}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                        <div class="col-md-3 pl-1">
+                            <mat-form-field appearance="outline">
+                                <mat-label>ICD 10 Code</mat-label>
+                                <input [(ngModel)]="newDiagnosis.icdCode" [ngModelOptions]="{standalone: true}"
+                                    maxlength="8" (change)="addDiagnosis()" #icd10 matInput placeholder="Ex- F12.3"
+                                    [matAutocomplete]="auto">
+                            </mat-form-field>
+                            <mat-autocomplete class="extended" #auto="matAutocomplete"
+                                (optionSelected)="onSelectionChanged($event)" maxlength="10">
+                                <mat-option *ngFor="let option of icdCodes" [value]="option">
+                                    {{option.code}} - {{option.description}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card mt-3">
+                    <h5 class="common_label_head">Treatment Plan / Advised</h5>
+
+                    <div class="row backsides" *ngIf='recordFound=="true"'>
+                        <div class="col-lg-3">
+                            <div class="paragraph_text_follow">
+                                Improvement Status*
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <mat-radio-group [(ngModel)]="ipModel.improvementStatus" name="improveStatus">
+                                <mat-radio-button *ngFor="let arr of improveArray" class="md-primary"
+                                    ng-style="{'display':'inline'}" [value]="arr">
+                                    {{ arr }}
+                                </mat-radio-button>
+                            </mat-radio-group>
+
+                        </div>
+                    </div>
+                    <div class="card mt-3 mb-2">
+                        <h5 class="common_label_head">Course in Hospital (Treatment and Progress)</h5>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Course in Hospital*</mat-label>
+                                    <textarea (keydown.enter)="$event.stopPropagation()" [(ngModel)]="ipModel.course"
+                                        name="course" matTextareaAutosize rows="3" matAutosizeMinRows="1"
+                                        matAutosizeMaxRows="5" matInput placeholder="Course in Hospital"
+                                        maxlength="2000"
+                                        onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="hscrolli mt-2 mb-2">
+                            <table class="tbl">
+                                <tbody>
+                                    <tr class="noBorder mb-2 row medbox medboxi"
+                                        *ngFor="let presc of prescriptionArray; let i = index">
+                                        <td class="col-2 pr-0 w-2a">
+                                            <input disabled [ngModelOptions]="{standalone: true}"
+                                                [(ngModel)]="presc.medName" class="form-control inputextended"
+                                                type="text" name="{{presc.medName}}">
+
+
+                                        </td>
+                                        <td class="col-2 pr-0 pl-1 w-2b">
+                                            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="presc.medDosage"
+                                                class="form-control" type="text" name="{{presc.medDosage}}"
+                                                [matAutocomplete]="auto4">
+                                            <mat-autocomplete class="extended1" #auto4="matAutocomplete">
+                                                <mat-option *ngFor="let dose of dosage" [value]="dose">
+                                                    {{dose}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </td>
+
+                                        <td class="col-2 pr-0 pl-1 w-2c">
+                                            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="presc.medTime"
+                                                class="form-control" type="text" name="{{presc.medTime}}">
+                                        </td>
+
+                                        <td class="col-1 pr-0 pl-1 w-2d">
+                                            <input numbersOnly [ngModelOptions]="{standalone: true}" [min]="1"
+                                                pattern="^[1-9 a-zA-Z][0-9 a-zA-Z]*$" maxlength="3"
+                                                [(ngModel)]="presc.medDuration1" class="form-control" type="text"
+                                                name="{{presc.medDuration1}}">
+
+                                        </td>
+                                        <td class="col-2 pr-0 pl-1 w-2e">
+                                            <!-- <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="presc.medDuration2" class="form-control" 
+                                                type="text" name="{{presc.medDuration2}}"> -->
+                                            <div class="form-control">
+                                                <mat-select [(ngModel)]="presc.medDuration2"
+                                                    [ngModelOptions]="{standalone: true}" name="{{presc.medDuration2}}">
+                                                    <mat-option *ngFor="let duration of durationTypes"
+                                                        [value]="duration">
+                                                        {{ duration }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </div>
+
+
+                                        </td>
+
+                                        <td class="col-2 pl-1 w-2f">
+                                            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="presc.medRemarks"
+                                                class="form-control" type="text" name="{{presc.medRemarks}}">
+                                        </td>
+                                        <td class="col-1 pl-1">
+                                            <button matTooltip={{deleteFileMessage}} class="btns common_heading mid"
+                                                type="button" (click)="deletePrescription(i)">
+                                                <mat-icon class="primary-icon">delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row mb-2 backsides medbox">
+                            <div class="col-md-2 pr-0">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Medicine Name</mat-label>
+                                    <input class="inputextended" [(ngModel)]="newPrescription.medName" maxlength="100"
+                                        (change)="addPrescription()" #medName name="medName" [matAutocomplete]="auto3"
+                                        matInput placeholder="Add medicine">
+                                </mat-form-field>
+                                <mat-autocomplete class="extended1" #auto3="matAutocomplete"
+                                    (optionSelected)="onSelectMedicine($event)">
+                                    <mat-option *ngFor="let drug of drugNames" [value]="drug">
+                                        {{drug.moleculeName | uppercase}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="col-md-2 pr-0 pl-1">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Dosage</mat-label>
+                                    <input [(ngModel)]="newPrescription.medDosage" maxlength="15"
+                                        (change)="addPrescription()" #medDosage name="medDosage"
+                                        [matAutocomplete]="auto4" matInput placeholder="Add Dosage">
+                                </mat-form-field>
+                                <mat-autocomplete class="extended1" #auto4="matAutocomplete">
+                                    <mat-option *ngFor="let dose of dosage" [value]="dose">
+                                        {{dose}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="col-md-2 pr-0 pl-1">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Dosing Time</mat-label>
+                                    <input [(ngModel)]="newPrescription.medTime" maxlength="50"
+                                        (change)="addPrescription()" name="medTime" matInput
+                                        placeholder="Ex: 1-0-1 or 1-1-1-1">
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-md-1 pr-0 pl-1">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Duration</mat-label>
+                                    <input numbersOnly #medDuration1="ngModel" (keyup)="manageDuration(medDuration1)"
+                                        [(ngModel)]="newPrescription.medDuration1" [min]="1"
+                                        pattern="^[1-9 a-zA-Z][0-9 a-zA-Z]*$" (focus)="toggleFocus()" maxlength="3"
+                                        (change)="addPrescription()" name="medDuration1" matInput
+                                        placeholder="Enter number">
+                                    <mat-error
+                                        *ngIf="medDuration1.invalid && (medDuration1.dirty || medDuration1.touched)">
+                                        {{invalidEntry}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2 pr-0 pl-1">
+
+                                <button class="input_button" #durationMenuTrigger1="matMenuTrigger"
+                                    (focus)="opensMenu(durationMenuTrigger1)"
+                                    [matMenuTriggerFor]="durationMenu1">{{toggleDurationName}}
+                                    <mat-icon>keyboard_arrow_down</mat-icon>
+                                </button>
+                                <mat-menu #durationMenu1="matMenu">
+                                    <button mat-menu-item *ngFor="let duration of durationTypes"
+                                        (click)="addDurationType(duration)">{{duration}}</button>
+                                </mat-menu>
+                            </div>
+                            <div class="col-md-2 pl-1">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Remarks</mat-label>
+                                    <input [(ngModel)]="newPrescription.medRemarks" (focus)="toggleFocus()"
+                                        maxlength="150" (change)="addPrescription()" name="medRemarks" matInput
+                                        placeholder="Remarks">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-lg-12">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Past Prescription</mat-label>
+                                <textarea (keydown.enter)="$event.stopPropagation()"
+                                    [(ngModel)]="ipModel.past_prescription" maxlength="2000" name="past_prescription"
+                                    matInput placeholder="Details of Past Prescription" rows="3" matAutosizeMinRows="1"
+                                    matAutosizeMaxRows="5" matTextareaAutosize
+                                    onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')"></textarea>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+                <div class="card mt-3">
+                    <legend class="common_label_head">Discharge Details</legend>
+                    <div class="card mt-2">                       
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Type of Discharge*</mat-label>
+                                    <mat-select [(ngModel)]="ipModel.dischargeType" name="dischargeType"
+                                        placeholder="Select Diagnosis Type">
+                                        <mat-option value="Discharge At Request">Discharge At Request</mat-option>
+                                        <mat-option value="Regular Discharge">Regular Discharge</mat-option>
+                                        <mat-option value="Discharge Against Medical Advice">Discharge Against Medical
+                                            Advice</mat-option>
+                                        <mat-option value="Abscond Case Entry">Abscond Case Entry</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 col-lg-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Condition At Discharge</mat-label>
+                                    <mat-select [(ngModel)]="ipModel.dischargeCondition" name="dischargeCondition"
+                                        placeholder="Select Condition">
+                                        <mat-option value="Same">Same</mat-option>
+                                        <mat-option value="Improved">Improved</mat-option>
+                                        <mat-option value="Remitted">Remitted</mat-option>
+                                        <mat-option value="Worse">Worsened</mat-option>
+                                        <mat-option value="Other">Other</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Condition Description</mat-label>
+                                    <textarea (keydown.enter)="$event.stopPropagation()"
+                                        [(ngModel)]="ipModel.conditionDescription" name="conditionDescription" matInput
+                                        rows="3" matAutosizeMinRows="1" matAutosizeMaxRows="5" matTextareaAutosize
+                                        placeholder="Condition Description" maxlength="2000" matInput
+                                        onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')"></textarea>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card mt-3">
+                        <h4 class="common_label_head">Treatment Advice at Discharge</h4>
+
+                        <div class="hscrolli">
+                            <table class="tbl">
+                                <tbody>
+                                    <tr class="noBorder mb-2 row medbox medboxi"
+                                        *ngFor="let presc of prescriptionArray1; let i = index">
+                                        <td class="col-2 pr-0 w-2a">
+                                            <input disabled [ngModelOptions]="{standalone: true}"
+                                                [(ngModel)]="presc.medName" class="form-control inputextended"
+                                                type="text" name="{{presc.medName}}">                                            
+
+                                        </td>
+                                        <td class="col-2 pr-0 pl-1 w-2b">
+                                            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="presc.medDosage"
+                                                class="form-control" type="text" name="{{presc.medDosage}}"
+                                                [matAutocomplete]="auto4">
+                                            <mat-autocomplete class="extended1" #auto4="matAutocomplete">
+                                                <mat-option *ngFor="let dose of dosage" [value]="dose">
+                                                    {{dose}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </td>
+
+                                        <td class="col-2 pr-0 pl-1 w-2c">
+                                            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="presc.medTime"
+                                                class="form-control" type="text" name="{{presc.medTime}}">
+                                        </td>
+
+                                        <td class="col-1 pr-0 pl-1 w-2d">
+                                            <input numbersOnly [ngModelOptions]="{standalone: true}" [min]="1"
+                                                pattern="^[1-9 a-zA-Z][0-9 a-zA-Z]*$" maxlength="3"
+                                                [(ngModel)]="presc.medDuration1" class="form-control" type="text"
+                                                name="{{presc.medDuration1}}">
+
+                                        </td>
+                                        <td class="col-2 pr-0 pl-1 w-2e">
+                                            <!-- <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="presc.medDuration2" class="form-control" 
+                        type="text" name="{{presc.medDuration2}}"> -->
+                                            <div class="form-control">
+                                                <mat-select [(ngModel)]="presc.medDuration2"
+                                                    [ngModelOptions]="{standalone: true}" name="{{presc.medDuration2}}">
+                                                    <mat-option *ngFor="let duration of durationTypes"
+                                                        [value]="duration">
+                                                        {{ duration }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </div>
+
+
+                                        </td>
+
+                                        <td class="col-2 pl-1 w-2f">
+                                            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="presc.medRemarks"
+                                                class="form-control" type="text" name="{{presc.medRemarks}}">
+                                        </td>
+                                        <td class="col-1 pl-1">
+                                            <button matTooltip={{deleteFileMessage}} class="btns common_heading mid"
+                                                type="button" (click)="deletePrescription1(i)">
+                                                <mat-icon class="primary-icon">delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="row mb-2 backsides medbox">
+                            <div class="col-md-2 pr-0">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Medicine Name</mat-label>
+                                    <input class="inputextended" [(ngModel)]="newPrescription1.medName" maxlength="100"
+                                        (change)="addPrescription1()"  #medName
+                                        name="medName" [matAutocomplete]="auto3" matInput placeholder="Add medicine">
+                                </mat-form-field>
+                                <mat-autocomplete class="extended1" #auto3="matAutocomplete"
+                                    (optionSelected)="onSelectMedicine($event)">
+                                    <mat-option *ngFor="let drug of drugNames" [value]="drug">
+                                        {{drug.moleculeName | uppercase}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="col-md-2 pr-0 pl-1">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Dosage</mat-label>
+                                    <input [(ngModel)]="newPrescription1.medDosage" maxlength="15"
+                                        (change)="addPrescription1()" #medDosage name="medDosage"
+                                        [matAutocomplete]="auto4" matInput placeholder="Add Dosage">
+                                </mat-form-field>
+                                <mat-autocomplete class="extended1" #auto4="matAutocomplete">
+                                    <mat-option *ngFor="let dose of dosage" [value]="dose">
+                                        {{dose}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="col-md-2 pr-0 pl-1">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Dosing Time</mat-label>
+                                    <input [(ngModel)]="newPrescription1.medTime" maxlength="50"
+                                        (change)="addPrescription1()" name="medTime" matInput
+                                        placeholder="Ex: 1-0-1 or 1-1-1-1">
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-md-1 pr-0 pl-1">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Duration</mat-label>
+                                    <input numbersOnly #medDuration1="ngModel"  (keyup)="manageDuration(medDuration1)"
+                                        [(ngModel)]="newPrescription1.medDuration1" [min]="1"
+                                        pattern="^[1-9 a-zA-Z][0-9 a-zA-Z]*$" (focus)="toggleFocus()" maxlength="3"
+                                        (change)="addPrescription1()" name="medDuration1" matInput
+                                        placeholder="Enter number">
+                                    <mat-error
+                                        *ngIf="medDuration1.invalid && (medDuration1.dirty || medDuration1.touched)">
+                                        {{invalidEntry}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2 pr-0 pl-1">
+                                <button class="input_button" #durationMenuTrigger="matMenuTrigger"
+                                    (focus)="opensMenu(durationMenuTrigger)"
+                                    [matMenuTriggerFor]="durationMenu">{{toggleDurationName}}
+                                    <mat-icon>keyboard_arrow_down</mat-icon>
+                                </button>
+                                <mat-menu #durationMenu="matMenu">
+                                    <button mat-menu-item *ngFor="let duration of durationTypes"
+                                        (click)="addDurationType1(duration)">{{duration}}</button>
+                                </mat-menu>
+                            </div>
+                            <div class="col-md-2 pl-1">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Remarks</mat-label>
+                                    <input [(ngModel)]="newPrescription1.medRemarks" (focus)="toggleFocus()"
+                                        maxlength="150" (change)="addPrescription1()" name="medRemarks" matInput
+                                        placeholder="Remarks">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <mat-form-field appearance="outline" class="text_area">
+                                    <mat-label>Follow Up Recommendation*</mat-label>
+                                    <textarea (keydown.enter)="$event.stopPropagation()"
+                                        [(ngModel)]="ipModel.treatmentAdvice" name="treatmentAdvice" maxlength="2000"
+                                        matTextareaAutosize rows="3" matAutosizeMinRows=1 matAutosizeMaxRows=5 matInput
+                                        placeholder="FollowUp Recommendation"
+                                        onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')"></textarea>
+                                </mat-form-field>
+                            </div>
+
+
+
+                            <div class="col-md-5">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Follow Up Date*</mat-label>
+                                    <input [min]="tomorrow" [(ngModel)]="ipModel.followUp" (focus)="picker2.open()"
+                                        name="followUp" matInput [matDatepicker]="picker2" placeholder="Follow Up Date"
+                                        readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-5">
+                                <!-- <mat-form-field appearance="outline">
+                <mat-label>Follow Up Date</mat-label>
+                <input [min]="tomorrow" [(ngModel)]="ipModel.followUp" (focus)="picker.open()" name="followUp" matInput
+                    [matDatepicker]="picker" placeholder="Follow Up Date" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field> -->
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Name of Doctor</mat-label>
+                                    <input [(ngModel)]="ipModel.docName" name="docName" matInput
+                                        placeholder="Enter Name" maxlength="75">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Designation</mat-label>
+                                    <input [(ngModel)]="ipModel.designation" name="designation" matInput
+                                        placeholder="Enter Designation" maxlength="100">
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    
+
+
+                   
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Discharge Date*</mat-label>
+                                    <input [min]="admitDate" [max]="today" [(ngModel)]="ipModel.disDate" 
+                                        (focus)="picker1.open()" (ngModelChange)="mergeDischargeDate()" name="disDate"
+                                        matInput [matDatepicker]="picker1" readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-4 col-lg-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Discharge Time*</mat-label>
+                                    <input type="time" [(ngModel)]="ipModel.disTime1" name="disTime1"
+                                        (change)="mergeDischargeDate()" matInput />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                  
+                    <div class="text-danger f-12">{{validDisDate}} <span *ngIf="validDisDate" class="common_text">
+                            Admission Date/Time:
+                            {{admitDate | date: 'dd/MM/yyyy, h:mm a'}}</span></div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-xl-12 col-lg-4"> Note* <div class="text-danger f-12">Please fill the following
+                            sections</div>
+                    </div>
+                    <div class="col-xl-12 col-lg-4"> IP Admission - Section Of Admission,Clinical
+                        profile,Diagnosis,Treatment Plan/Advised</div>
+                    <div class="col-xl-12 col-lg-4"> IP Discharge(PreRequisite: Patient has to be admitted) - Discharge
+                        Details, Treatment Advice at discharge</div>
+                    <div class="col-xl-12 col-lg-4"> Also can add both IP admission and IP Discharge together</div>
+                </div>
+
+
+                <div class="text-center" style="margin: 10px;">
+                    <a [routerLink]="" style="margin: 10px;" (click)="fetchFhirRequest()"><u>View Fhir Request</u></a>
+
+                    <button mat-raised-button class="btn-secondary mr-2" (click)="cancel()">Dashboard</button>
+                    <button type="submit" mat-raised-button class="btn-secondary mr-2"
+                        [disabled]="!formValid" (click)="checkMandatoryIPBMR()">Save</button>
+                </div>
+
+                <div class="form-group" *ngIf="showFhirRequest">
+                    <mat-form-field appearance="outline">
+                        <mat-label><b>Fhir Request</b></mat-label>
+                        <textarea [(ngModel)]="this.response" name="textrequest" rows="3" matInput matAutosizeMinRows=1
+                            matAutosizeMaxRows=100000 style="width:1000px; height: 300px;"></textarea>
+                    </mat-form-field>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,238 @@
+<div class="container-fluid" appNoRightClick>
+    <div class="row justify-content-md-center mt-x">
+        <div class="text-center mb-3">
+            <div class="common_headings"><b>Therapy Basic Medical Record </b></div>
+        </div>
+    </div>
+    <div class="row justify-content">
+        <div class="col-lg-12">
+         <form #clinicalForm="ngForm" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+            <div class="card mt-3">
+                <div class="row mb-2 backsides">
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Patient ID</mat-label>
+                        <input required [(ngModel)]="therapyModel.patientID" maxlength="150" name="Patient ID" matInput>
+                    </mat-form-field>
+                    
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>Consent ID*</mat-label>
+                        <input [(ngModel)]="therapyModel.consentID" 
+                        maxlength="150" name="Consent ID" matInput
+                        > </mat-form-field> 
+                        
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>Org Reg ID*</mat-label>
+                        <input [(ngModel)]="therapyModel.orgId" 
+                        maxlength="150" name="Org Reg ID" matInput
+                       > </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>Org Name*</mat-label>
+                        <input [(ngModel)]="therapyModel.orgName" 
+                        maxlength="150" name="Org Name" matInput
+                       > </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>MHP Reg ID*</mat-label>
+                        <input [(ngModel)]="therapyModel.docId" 
+                        maxlength="150" name="MHP Reg ID" matInput
+                       > </mat-form-field>
+                </div>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="common_label_head">Basic Details</div>
+                <div class="row mt-2">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Education</mat-label>
+                            <input [(ngModel)]="therapyModel.education" name="education" matInput maxlength="100">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Occupation</mat-label>
+                            <input [(ngModel)]="therapyModel.occupation" name="occupation" matInput maxlength="100">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>  
+            <div class="card mt-3">
+
+                <div class="common_label_head">Therapy Details</div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Session Number</mat-label>
+                            <input required numbersOnly [(ngModel)]="therapyModel.sessionNumber" name="sessionNumber" matInput maxlength="6">
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Therapy Method</mat-label>
+                            <mat-select required [(ngModel)]="therapyModel.therapyMethod" name="therapyMethod">
+                                 <mat-option value="Individual">Individual</mat-option>
+                                <mat-option value="Couple/Family">Couple/Family</mat-option>
+                                <mat-option value="Group">Group</mat-option>
+                                <mat-option value="Other">Other</mat-option>
+                                <!-- <mat-option *ngFor="let arr of therapyMethodArray" [value]="arr.value">
+                                    {{ arr.key }}
+                                </mat-option> -->
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline" class="text_area">
+                            <mat-label>Type of Therapy</mat-label>
+                            <textarea required (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="therapyModel.therapyType" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" maxlength="2000" name="therapyType" matInput placeholder="Enter type of therapy" rows="3" matInput matTextareaAutosize matAutosizeMinRows=1
+                                matAutosizeMaxRows=5></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline" class="text_area">
+                            <mat-label>Psychiatric Diagnosis</mat-label>
+                            <textarea required (keydown.enter)="$event.stopPropagation()" [(ngModel)]="therapyModel.psychiatricDiagnosis" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" maxlength="2000" name="psychiatricDiagnosis" rows="3" matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline" class="text_area">
+                            <mat-label>Objective of Session</mat-label>
+                            <textarea required (keydown.enter)="$event.stopPropagation()" [(ngModel)]="therapyModel.osession" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" maxlength="2000" name="osession" rows="3" matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline" class="text_area">
+                            <mat-label>Key Issue/Theme Discussed</mat-label>
+                            <textarea required (keydown.enter)="$event.stopPropagation()" [(ngModel)]="therapyModel.keyIssue" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" maxlength="2000" name="keyIssue" rows="3" matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline" class="text_area">
+                            <mat-label>Therapy Technique Used</mat-label>
+                            <textarea  (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="therapyModel.therapyTechnique" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" maxlength="2000" name="therapyTechnique" rows="3" matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline" class="text_area">
+                            <mat-label>Therapist Observation/Reflections</mat-label>
+                            <textarea required (keydown.enter)="$event.stopPropagation()" [(ngModel)]="therapyModel.observationReflection" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" maxlength="2000" name="observationReflection" rows="3" matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="card mt-3">
+                        
+
+                <div class="row backsides">
+                    <div class="col-lg-2">
+                        <div class="common_label_head">
+                            Follow Up
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <mat-radio-group [(ngModel)]="id" name="id">
+                            <mat-radio-button class="example-radio-button" *ngFor="let id of followup" [value]="id">
+                                {{id}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+              
+                <div class="row"  *ngIf="id == 'Yes'">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline" class="text_area">
+                            <mat-label>Plan for Next Session</mat-label>
+                            <textarea required (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="therapyModel.nextSession" maxlength="2000" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" name="nextSession" rows="3" matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline" class="round-form">
+                            <mat-label>Date For Next Session</mat-label>
+                            <input [min]="tomorrow" (focus)="picker.open()" [(ngModel)]="therapyModel.followUp" required name="followUp" matInput [matDatepicker]="picker" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+
+            </div>
+
+            <div class="card mt-3">
+                <div class="common_label_head">
+                    Therapist Details
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Full Name</mat-label>
+                            <input nameOnly required [(ngModel)]="therapyModel.therapistName" maxlength="75" name="therapistName" matInput placeholder="Enter Full Name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Qualification</mat-label>
+                            <input addressOnly required [(ngModel)]="therapyModel.therapistQualification" maxlength="100" name="therapistQualification" matInput>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="common_label_head">Supervisor Details</div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Full Name</mat-label>
+                            <input nameOnly [(ngModel)]="therapyModel.supervisorName" maxlength="75" name="supervisorName" matInput placeholder="Enter Full Name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Qualification</mat-label>
+                            <input addressOnly [(ngModel)]="therapyModel.supervisorQualification" maxlength="100" name="supervisorQualification" matInput>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="text-center" style="margin: 10px;">
+                <a [routerLink]=""style="margin: 10px;" ><u>View Fhir Request</u></a>
+                <button mat-raised-button class="btn-secondary mr-2" (click)="cancel()">Dashboard</button>
+                <button type="submit" mat-raised-button class="btn-secondary mr-2"
+                    [disabled]="!clinicalForm.valid" (click)="save()">Save</button>
+            </div>
+
+            <div class="form-group" *ngIf="showFhirRequest">
+                <mat-form-field  appearance="outline">
+                    <mat-label><b>Fhir Request</b></mat-label>
+                <textarea   [(ngModel)]="this.response"
+                 name="textrequest" rows="3" matInput 
+                matAutosizeMinRows=1 matAutosizeMaxRows=100000
+                style="width:1000px; height: 300px;"
+               ></textarea></mat-form-field>
+            </div>
+            </form>
+            </div>
+            </div>
+            </div>
+        

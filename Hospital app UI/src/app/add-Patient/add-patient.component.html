@@ -1,0 +1,358 @@
+<div class="container-fluid mt-3 mb-n">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="backbtn text-right">
+                <button mat-raised-button class="" (click)="cancel()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a (click)="cancel()">Home</a></li>
+                    <li class="breadcrumb-item active">New Patient Registration</li>
+                </ol>
+
+            </nav>
+
+            <div class="cardbor">
+                <form #patientForm="ngForm">
+                    <h5 class="common_heading">New Patient Registration
+                    </h5>
+                    <div class="common_label_head mt-3">
+                        Select ID
+                    </div>
+
+                    <div class="row mt-2" *ngIf="id == 'ID Proof'">
+                        <div class="col-lg-4">
+                            <mat-form-field appearance="outline" class="mb--1">
+                                <mat-label>Identity Proof</mat-label>
+                                <mat-select [(value)]="idType" [disabled]="otpVerified">
+                                    <!-- <mat-option *ngFor="let idType of idTypes" >
+                                        {{idType}}
+                                      </mat-option> -->
+                                    <mat-option *ngFor="let arr of idTypes" [value]="arr.value">
+                                        {{ arr.key }}
+                                    </mat-option>
+                                    <!-- <mat-option value="AB-ARK ID">AB-ARK ID</mat-option>
+                                    <mat-option value="UHID">e-Hospital</mat-option> -->
+                                    <mat-option value="None">None</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-8">
+                            <nav>
+                                <div *ngIf="idType != 'None'">
+                                    <span *ngIf="idType == 'MOSIP ID'" class="d-inline-block w-1">
+                                        <mat-form-field appearance="outline" class="mb--1">
+                                            <mat-label>UIN/VID Number</mat-label>
+                                            <!-- <input matInput addressOnly ngModel #idNumber="ngModel" minlength="10" (keyup)="checkIDNumber(idNumber)"
+                                                maxlength="20" required name="idNumber" placeholder="Enter UIN/VID Number" /> -->
+                                                <input type="tel" #idNumbers required numbersOnly minlength="10"
+                                            (keyup)="checkIDNumber(idNumbers)" [disabled]="otpVerified" 
+                                            maxlength="20" [(ngModel)]=idNumber name="idNumber"
+                                            matInput placeholder="Enter UIN/VID Number" />
+                                        </mat-form-field>
+                                    </span>
+                                    <span *ngIf="idType != 'MOSIP ID'" class="d-inline-block w-1">
+                                        <mat-form-field appearance="outline" class="mb--1">
+                                            <mat-label>ID number</mat-label>
+                                            <input matInput addressOnly ngModel #idNumber="ngModel" minlength="10" (keyup)="checkIDNumber(idNumber)"
+                                                maxlength="20" required name="idNumber" placeholder="Enter UIN/VID Number" />
+                                                <!-- <input type="tel" #idNumbers required numbersOnly minlength="10"
+                                            (keyup)="checkIDNumber(idNumbers)" maxlength="20" [(ngModel)]=idNumber name="idNumber"
+                                            matInput placeholder="Enter ID Number" /> -->
+                                        </mat-form-field>
+                                    </span>
+                                    <span class="d-inline-block w-1 ml-3">
+                                        <div *ngIf="idType != 'MOSIP ID'" class="d-inline-block">
+                                            <div>
+                                        <mat-form-field appearance="outline" class="mb--1">
+                                            <mat-label>Mobile Number</mat-label>
+                                            <input type="tel" #mobile required minlength="10"
+                                                (keyup)="checkMobile(mobile)" maxlength="10" [(ngModel)]="mobileNum" 
+                                                 name="phone" matInput
+                                                placeholder="Enter Phone Number" />
+                                        </mat-form-field>
+                                        </div>
+                                    </div>
+                                    </span>
+                                    <span *ngIf="idType == 'MOSIP ID'" class="d-inline-block w-1">
+                                        <mat-form-field appearance="outline" class="mb--1">
+                                            <mat-label>OTP Channel</mat-label>
+                                            <mat-select [(value)]="verifyType" (blur)="checkIdMobile()" [disabled]="otpVerified">
+                                                <mat-option value="PHONE">Mobile</mat-option>
+                                                <mat-option value="EMAIL">Email</mat-option>
+                                                <mat-option value="EMAIL,PHONE">Both</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </span>
+                                    <span class="d-inline-block ml-3">
+                                        <div *ngIf="mobButtonName == 'Send OTP'" class="d-inline-block">
+                                            <button mat-raised-button class="btn btn-manual"
+                                                 (click)="getMosipOtp(idNumber)" [disabled]="otpVerified" id="bt">
+                                                Send OTP 
+                                            </button>
+                                        </div>
+                                        <div *ngIf="mobButtonName == 'Resend OTP'" class="d-inline-block">
+                                            <button mat-raised-button class="btn btn-manual"
+                                                [disabled]="validMobile !== true || timeOut || otpVerified" (click)="resendMosipOtp(mobile)"
+                                                id="bt">
+                                                Resend OTP
+                                            </button>
+                                        </div>
+                                    </span>
+                                </div>
+
+                                <div class="row" *ngIf="idType == 'None'">
+                                    <span class="d-inline-block w-1 ml-2">
+                                        <mat-form-field appearance="outline" class="mb--1">
+                                                <mat-label>Mobile Number</mat-label>
+                                                <input type="tel" #mobileNone required minlength="10"
+                                                    (keyup)="checkMobile(mobileNone)" maxlength="10"  [(ngModel)]="mobileNum" name="phone" matInput
+                                                    placeholder="Enter Phone Number" />
+                                            </mat-form-field>
+                                        </span>
+                                    <span class="d-inline-block ml-3 mt-1">
+                                        <div *ngIf="mobButtonName == 'Send OTP'" class="d-inline-block">
+                                            <button mat-raised-button class="btn btn-manual" [disabled]="validMobile !== true"
+                                                 (click)="getMosipNoneOtp(mobileNone)" id="bt">
+                                                Send OTP 
+                                            </button>
+                                        </div>
+                                        <div *ngIf="mobButtonName == 'Resend OTP'" class="d-inline-block">
+                                            <button mat-raised-button class="btn btn-manual"
+                                                [disabled]="validMobile !== true || timeOut" (click)="getMosipNoneOtp(mobileNone)"
+                                                id="bt">
+                                                Resend OTP
+                                            </button>
+                                        </div>
+                                    </span>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="common_heading mt-1">
+                        Verify OTP and get Demographic Details
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-lg-12">
+                            <nav>
+                                <span class="d-inline-block w-1">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>OTP</mat-label>
+                                        <input type="tel" numberOnly [(ngModel)]="mosipOtp" 
+                                        [disabled]="showMosipOTPField == false || otpVerified"
+                                            [ngModelOptions]="{standalone: true}" required
+                                            (blur)="checkMosipOtp(mosipOtp)" minlength="6" maxlength="6" matInput
+                                            placeholder="Enter OTP">
+                                    </mat-form-field>
+                                </span>
+
+                                <span class="d-inline-block ml-2">
+                                    <div *ngIf="validMosipOTP == true" class="d-inline-block">
+                                        <button mat-raised-button class="btn btn-manual"
+                                            (click)="getServDet()" id="bt" [disabled]="otpVerified">
+                                            Verify
+                                        </button>
+                                    </div>
+                                </span>
+                            </nav>
+                            <div *ngIf="showMsg" class="mt--1" style="color: red; font-size: 10px; top: -5px;">
+                                Data Not available for the given ID.
+                            </div>
+                        </div>
+                        <!-- <div *ngIf="verified" class="mt-1 ml-3" style="color: rgb(11, 175, 52); font-size: 13px; top: -5px;">
+                            OTP verified
+                        </div> -->
+                        <div *ngIf="otpInvalid" class="mt-1 ml-3" style="color: rgb(231, 17, 17); font-size: 13px; top: -5px;">
+                            OTP Invalid
+                        </div>
+                        <div [style.color]="mobileVerify ? 'green' : 'red'" class="otpchecktext ml-3">
+                            {{otpResponseMessage}}
+                        </div>
+                    </div>
+
+                    <div class="common_heading mt-1">
+                        Patient Details
+                    </div>
+                    <div class="row mb-2 mt-2">
+                        <div class="col-lg-6">
+                            <h4 class="common_label_head">
+                                Basic Details
+                            </h4>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Salutation</mat-label>
+                                        <mat-select [(ngModel)]="salutation" name="salutation">
+                                            <mat-option *ngFor="let arr of salutationArray" [value]="arr.value">
+                                                {{ arr.key }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput nameOnly [(ngModel)]="firstname" maxlength="75" [disabled]="idType == 'MOSIP ID'" required name="firstname" placeholder="Enter first name" />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput nameOnly [(ngModel)]="lastname" name="lastname" maxlength="75" [disabled]="idType == 'MOSIP ID'" placeholder="Enter last name" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Date of Birth</mat-label>
+                                        <input [(ngModel)]="dob" [max]="today" (focus)="picker.open()" name="dob" [disabled]="idType == 'MOSIP ID'" required matInput [matDatepicker]="picker" placeholder="Date of Birth" readonly />
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Gender</mat-label>
+                                        <mat-select [(ngModel)]="gender" name="gender" required placeholder="Select Gender" [disabled]="idType == 'MOSIP ID'">
+                                            <mat-option *ngFor="let arr of genderArray" [value]="arr.value">
+                                                {{ arr.key }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div *ngIf="idType != 'MOSIP ID'" class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Email</mat-label>
+                                        <input [(ngModel)]="email" #patientRegEmail="ngModel" name="email" type="email" maxlength="75" matInput placeholder="Enter Email" email pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" />
+                                    </mat-form-field>
+                                    <div *ngIf="patientRegEmail.invalid && (patientRegEmail.dirty || patientRegEmail.touched)" class="text-danger f-12 mt--1">
+                                        <div *ngIf="patientRegEmail.errors.required">Email is required</div>
+                                        <div *ngIf="patientRegEmail.errors.pattern">Invalid Email</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="idType == 'MOSIP ID'" class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Email</mat-label>
+                                        <input [(ngModel)]="email" [disabled]="idType == 'MOSIP ID'" #patientRegEmail="ngModel" name="email" type="email" maxlength="75" matInput placeholder="Enter Email" email pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" />
+                                    </mat-form-field>
+                                    <div *ngIf="patientRegEmail.invalid && (patientRegEmail.dirty || patientRegEmail.touched)" class="text-danger f-12 mt--1">
+                                        <div *ngIf="patientRegEmail.errors.required">Email is required</div>
+                                        <div *ngIf="patientRegEmail.errors.pattern">Invalid Email</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Mobile Number</mat-label>
+                                        <input type="tel" #mobile required minlength="10" (keyup)="checkMobile(mobile)" maxlength="10" [disabled]="idType == 'MOSIP ID'" [(ngModel)]="mobileNum" name="phone" matInput placeholder="Enter Phone Number" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Salutation</mat-label>
+                                        <mat-select [(ngModel)]="guardianSal" name="guardianSal" required>
+                                            <mat-option *ngFor="let arr of salutationArray" [value]="arr.value">
+                                                {{ arr.key }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-8">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Father's/Mother's Name</mat-label>
+                                        <input matInput nameOnly required [(ngModel)]="guardianName" maxlength="75" name="guardianName" placeholder="Enter full name" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4 class="common_label_head">
+                                Permanent Address
+                            </h4>
+                            <div class="row">
+                                <div class="col-12">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Address 1</mat-label>
+                                        <input addressOnly required [(ngModel)]="address1" [disabled]="idType == 'MOSIP ID'" name="address1" maxlength="75" matInput placeholder="Address 1" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Address 2</mat-label>
+                                        <input addressOnly [(ngModel)]="address2" name="address2" maxlength="75" matInput placeholder="Address 2" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>Pincode</mat-label>
+                                        <input numbersOnly required #pincodeF="ngModel" [(ngModel)]="pincode" [disabled]="idType == 'MOSIP ID'" [ngModelOptions]="{standalone: true}" placeholder="Enter pincode" minlength="4" maxlength="6" matInput />
+                                    </mat-form-field>
+                                    <div *ngIf="showMsgpincode" class="mt--1" style="color: red; font-size: 10px; top: -5px;">
+                                        Data Not available for this Pincode.
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>City</mat-label>
+                                        <input alphaOnly required [(ngModel)]="city" [disabled]="idType == 'MOSIP ID'" name="city" maxlength="50" matInput placeholder="Enter city" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-select required [(ngModel)]="district" name="district" [disabled]="idType == 'MOSIP ID'" placeholder="District">
+                                            <mat-option *ngFor="let district of districtsList" [value]="district">
+                                                {{district}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <!-- <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>District</mat-label>
+                                        <input alphaOnly required [(ngModel)]="district" name="district" maxlength="50" matInput placeholder="Enter district" />
+                                    </mat-form-field> -->
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <!-- <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>State</mat-label>
+                                        <input alphaOnly ngModel="Karnataka" maxlength="50" name="state" matInput />
+                                    </mat-form-field> -->
+                                    <mat-form-field appearance="outline" class="mb--1">
+                                        <mat-label>State</mat-label>
+                                        <input required alphaOnly [(ngModel)]="state" maxlength="50" name="state" [disabled]="idType == 'MOSIP ID'" matInput placeholder="Enter State" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="text-center mb-3 mt-3">
+                    <button smat-raised-button (click)="cancel()" mat-raised-button class="btn-secondary mr-2">Cancel</button>
+                    <button stype="submit" #submitBtn [disabled]="!patientForm.valid" mat-raised-button class="btn-secondary" (click)="register(patientForm, submitBtn)">Register</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+<div class="container-fluid" appNoRightClick>
+
+    <div class="row">
+        
+        <div class="col-lg-5">
+            <div class="row justify-content-md-center mt-x">
+              
+                
+                <div class="text-center mb-3">
+                    <div class="common_headings"><b>Verify and Create Consent </b></div>
+                   
+                    <div class="common_text f-14">
+                    HIU request EManas to create consent by validating the otp and consentRequestID  provided</div>
+                </div> 
+			<mat-card class="mb-15">
+       
+           
+               
+                   
+                    <div class="card mt-3">
+                    <div class="row mb-2 backsides">
+                        <div class="col-md-3">
+                            <mat-form-field required appearance="outline">
+                                <mat-label>OTP*</mat-label>
+                                <input [(ngModel)]="otp" 
+                                maxlength="150" name="OTP*" matInput
+                                > </mat-form-field>
+                                
+                        </div>
+
+                        <div class="col-md-3">
+                            <mat-form-field required appearance="outline">
+                                <mat-label>Consent RequestID*</mat-label>
+                                <input [(ngModel)]="consentRequestId" 
+                                maxlength="150" name="Consent RequestID" matInput
+                                > </mat-form-field>
+                                
+                        </div>
+
+                      
+
+                       
+
+                        
+                          
+
+
+                       
+
+                       
+                      
+
+                        
+                       
+                       
+                       
+                                        
+
+                                     
+                                       
+
+                        
+                    </div>
+
+                   </div>
+
+                   
+
+                    
+                   
+                       
+
+
+                        
+
+                        
+
+                       
+                        
+                   
+                    <div class="text-center" style="margin: 10px;">
+                        <button mat-raised-button class="btn-secondary mr-2" (click)="cancel()">Dashboard</button>
+                        <button type="submit" mat-raised-button class="btn-secondary mr-2"
+                            (click)="save()">Save</button>
+                    </div>
+                   
+               
+           
+           
+        
+    </mat-card>
+    <!-- <div class="col-lg-6">
+        <mat-form-field appearance="outline">
+            <mat-label>Response </mat-label>
+            <input required nameOnly  [(ngModel)]="this.message" class="text-danger"
+                matInput placeholder="">
+        </mat-form-field>
+    </div> -->
+
+</div>
+</div>
+</div>
+
+</div>

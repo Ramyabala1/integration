@@ -1,0 +1,285 @@
+<div class="container-fluid" appNoRightClick>
+    <div class="row justify-content-md-center mt-x">
+        <div class="text-center mb-3">
+            <div class="common_headings"><b>Assessment Basic Medical Record </b></div>
+        </div>
+    </div>
+    <div class="row justify-content">
+        <div class="col-lg-12">
+         <form #clinicalForm="ngForm" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+            <div class="card mt-3">
+                <div class="row mb-2 backsides">
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Patient ID</mat-label>
+                        <input required [(ngModel)]="asModel.patientID" maxlength="150" name="Patient ID" matInput>
+                    </mat-form-field>
+                    
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>Consent ID*</mat-label>
+                        <input [(ngModel)]="asModel.consentID" 
+                        maxlength="150" name="Consent ID" matInput
+                        > </mat-form-field> 
+                        
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>Org Reg ID*</mat-label>
+                        <input [(ngModel)]="asModel.orgId" 
+                        maxlength="150" name="Org Reg ID" matInput
+                       > </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>Org Name*</mat-label>
+                        <input [(ngModel)]="asModel.orgName" 
+                        maxlength="150" name="Org Name" matInput
+                       > </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>MHP Reg ID*</mat-label>
+                        <input [(ngModel)]="asModel.docId" 
+                        maxlength="150" name="MHP Reg ID" matInput
+                       > </mat-form-field>
+                </div>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="common_label_head">Basic Details</div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Education</mat-label>
+                            <input addressOnly required [(ngModel)]="asModel.education" name="education" matInput placeholder="" maxlength="100">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Occupation</mat-label>
+                            <input addressOnly required [(ngModel)]="asModel.occupation" name="occupation" matInput placeholder="" maxlength="100">
+                        </mat-form-field>
+                    </div>
+                </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="common_label_head">Referral Details</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Referred By</mat-label>
+                                <input nameOnly [(ngModel)]="asModel.referredBy" name="referredBy" matInput placeholder="" maxlength="75">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Reason For Referral</mat-label>
+                                <mat-select [(ngModel)]="asModel.referralReason" name="referralReason">
+                                     <mat-option value="IQ Assessment">IQ Assessment</mat-option>
+                                    <mat-option value="Specific Learning Assessment">Specific Learning Assessment</mat-option>
+                                    <mat-option value="Personality Assessment">Personality Assessment</mat-option>
+                                    <mat-option value="Neuro Psychological Assessment">Neuro Psychological Assessment</mat-option>
+                                    <mat-option value="Psychopathology Assessment">Psychopathology Assessment</mat-option>
+                                    <mat-option value="Others">Others</mat-option>
+                                    <!-- <mat-option *ngFor="let arr of referralReasonArray" [value]="arr.value">
+                                        {{ arr.key }}
+                                    </mat-option> -->
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Referral Note</mat-label>
+                                <textarea  (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="asModel.referralNote" name="referralNote" rows="3" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" matInput placeholder="" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5 maxlength="200"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card mt-3">
+                    <div class="common_label_head">Assessment Details</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Language Tested In</mat-label>
+                                <mat-select required [(ngModel)]="asModel.tLanguage" name="tLanguage">
+                                  <mat-option value="Kannada">Kannada</mat-option>
+                                    <mat-option value="English">English</mat-option>
+                                    <mat-option value="Hindi">Hindi</mat-option>
+                                    <mat-option value="Tamil">Tamil</mat-option>
+                                    <mat-option value="Telugu">Telugu</mat-option>
+                                    <mat-option value="Malayalam">Malayalam</mat-option>
+                                    <mat-option value="Other">Other</mat-option> 
+                                    <!-- <mat-option *ngFor="let arr of languageArray" [value]="arr.value">
+                                        {{ arr.key }}
+                                    </mat-option> -->
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Background Information</mat-label>
+                                <textarea required (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="asModel.backInfo" name="backInfo" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" rows="3" matInput placeholder="" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5 maxlength="2000"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr *ngFor="let comField of informantArray; let i = index" class="row mb-2">
+
+                                    <td class="col-6">
+                                        <input style="width: 100% !important" class="form-control" disabled [(ngModel)]="comField.informant" type="text" name="{{comField.informant}}">
+                                    </td>
+                                    <td class="col-6">
+                                        <span class="d-inline-block w-1">
+                                <input style="width: 100% !important" class="form-control" disabled [(ngModel)]="comField.relationship" type="text" name="{{comField.relationship}}">
+                                </span>
+                                        <span class="d-inline-block ml-2">
+                                <button matTooltip={{deleteFileMessage}}  class="btns common_heading mids" (click)="deleteInformant(i)">
+                                        <mat-icon class="primary-color">delete</mat-icon>
+                                    </button>
+                                </span>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row backsides mb-2">
+                        <div class="col-md-6">
+                            <mat-form-field required appearance="outline">
+                                <mat-label>Informant</mat-label>
+                                <input nameOnly [(ngModel)]="newInformant.informant" (change)="addInformant()" name="informant" matInput placeholder="Informant Name" maxlength="75">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Informant Relationship</mat-label>
+                                <input nameOnly [(ngModel)]="newInformant.relationship" (change)="addInformant()" name="relationship" matInput placeholder="Type of relation" maxlength="50">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Salient Behavioral Observation</mat-label>
+                                <textarea required (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="asModel.silentBehaviouralObservation" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" name="silentBehaviouralObservation" rows="3" matInput placeholder="" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5
+                                    maxlength="2000"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Impression</mat-label>
+                                <textarea required (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="asModel.impression" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" name="impression" rows="3" matInput placeholder="" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5 maxlength="2000"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Test/Scales Administered</mat-label>
+                                <textarea required  (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="asModel.tsadmin" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" name="tsadmin" rows="3" matInput placeholder="" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5 maxlength="2000"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Test Scores</mat-label>
+                                <textarea required (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="asModel.tscore" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" name="tscore" rows="3" matInput placeholder="" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5 maxlength="2000"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Recommendation</mat-label>
+                                <textarea required (keydown.enter)="$event.stopPropagation()"  [(ngModel)]="asModel.recommend" onkeyup="this.value = this.value.replace(/[*<>{}^!$\\\]\[]/g, '')" name="recommend" rows="3" matInput placeholder="" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5 maxlength="2000"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Reliability</mat-label>
+                                <mat-select required [(ngModel)]="asModel.reliability" name="reliability">
+                                    <mat-option value="Yes">Yes</mat-option>
+                                    <mat-option value="No">No</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Adequacy</mat-label>
+                                <mat-select required [(ngModel)]="asModel.adequacy" name="adequacy">
+                                    <mat-option value="Yes">Yes</mat-option>
+                                    <mat-option value="No">No</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <div class="common_label_head">
+                        Assessor Details
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Enter Full Name</mat-label>
+                                <input nameOnly required [(ngModel)]="asModel.assessor_name" name="assessor_name" matInput placeholder="Enter Full Name" maxlength="75">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Qualification</mat-label>
+                                <input addressOnly required [(ngModel)]="asModel.aQualification" name="aQualification" matInput placeholder="" maxlength="100">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <div class="common_label_head">Supervisor Details</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Enter Full Name</mat-label>
+                                <input nameOnly [(ngModel)]="asModel.supervisor_name" name="supervisor_name" matInput placeholder="Enter Full Name" maxlength="75">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Qualification</mat-label>
+                                <input addressOnly [(ngModel)]="asModel.sQualification" name="sQualification" matInput placeholder="" maxlength="100">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+          
+            
+            
+            
+            
+            <div class="text-center" style="margin: 10px;">
+                <a [routerLink]=""style="margin: 10px;"><u>View Fhir Request</u></a>
+                <button mat-raised-button class="btn-secondary mr-2" (click)="cancel()">Dashboard</button>
+                <button type="submit" mat-raised-button class="btn-secondary mr-2"
+                    [disabled]="!clinicalForm.valid" (click)="save()">Save</button>
+            </div>
+
+            <div class="form-group" *ngIf="showFhirRequest">
+                <mat-form-field  appearance="outline">
+                    <mat-label><b>Fhir Request</b></mat-label>
+                <textarea   [(ngModel)]="this.response"
+                 name="textrequest" rows="3" matInput 
+                matAutosizeMinRows=1 matAutosizeMaxRows=100000
+                style="width:1000px; height: 300px;"
+               ></textarea></mat-form-field>
+            </div>
+            </form>
+            </div>
+            </div>
+            </div>
+        

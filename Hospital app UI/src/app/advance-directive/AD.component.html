@@ -1,0 +1,165 @@
+<div class="container-fluid" appNoRightClick>
+    <div class="row justify-content-md-center mt-x">
+        <div class="text-center mb-3">
+            <div class="common_headings"><b>Get Advance Directive  </b></div>
+            <div class="small_text f-12"> The advance directive for patients can be viewed who has lost the capacity to make
+                treatment related decisions.</div>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-4">
+            <form #adForm="ngForm" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Patient ID</mat-label>
+                        <input required [(ngModel)]="patientId" maxlength="150" name="Patient ID" matInput>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field required appearance="outline">
+                        <mat-label>Consent ID</mat-label>
+                        <input required  [(ngModel)]="consentId" 
+                        maxlength="150" name="Consent ID" matInput
+                        > </mat-form-field>
+                        
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="submit" mat-raised-button class="btn btn-primary mr-2"
+                           [disabled]="adForm.invalid" (click)="ViewADDetails()">View AD</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <button type="submit" mat-raised-button class="btn btn-primary mr-2"
+                        [disabled]="adForm.invalid"  (click)="getADDetails()"> View FHIR Response</button>
+                    </div>
+                </div>  
+                <br />
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a [routerLink]=""style="margin: 10px;" (click)="fetchFhirRequest()"><u>View Fhir Request</u></a>
+                    </div>
+                        <div class="col-lg-6" >
+                        <button mat-raised-button class="btn btn-secondary mr-2" (click)="back()">Dashboard</button>
+                    </div>
+                </div> 
+            <br />
+           
+                <div class="row"  *ngIf="showAD">
+                       <div class="col-lg-12">
+                            <mat-checkbox name="accept" [(ngModel)]="accept" required>
+                                I MHP would like to view the AD of this patient on {{today | date : 'dd/MM/yyyy'}} since the patient has lost the capacity to make treatment related decisions.
+                            </mat-checkbox>
+                        </div>
+            
+                   
+                    <div class="col-lg-12 text-center"> 
+                        <button mat-raised-button class="btn" [disabled]="!accept" (click)="ViewAD()">View AD</button>
+                    </div>
+
+                    <div class="text-danger" *ngIf="timeOutMHMSID" >
+                        No Records Found!
+                    </div>
+                </div>
+                <div  *ngIf="showDetails">
+                    <div class="card mt-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-3 col-3">
+                                        <p class="common_text"><b>AD ID </b></p>
+                                    </div>
+                                    <div class="col-md-3 col-3">
+                                        <p class="common_text">{{adID}}</p>
+                                    </div>
+                                    <div class="col-md-3 col-3">
+                                        <p class="common_text"><b>Updated On</b></p>
+                                    </div>
+                                    <div class="col-md-3 col-3">
+                                        <p class="common_text">{{approvedOn | date: 'dd/MM/yyyy'}}</p>
+                                    </div>
+                                    <div class="col-md-5 col-6">
+                                        <p class="common_text"><b>Current Status</b></p>
+                                    </div>
+                                    <div class="col-md-7 col-6">
+                                        <p class="common_text">{{status}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title class="common_label_head">
+                                        AD Documents
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div *ngFor="let images of imageArray">
+                                    <div class="row ">
+                                        <div class="col-12 pt-2 pb-2">
+                                            <div class="card-1">
+                                                <h5 class="common_label_head">
+                                                    {{images.fileType}}
+                                                </h5>
+                                                <img src={{images.fileContent}} class="img_center">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngFor="let file of filesNew ">
+                                    <div class="row">
+                                        <div class="col-12 pt-2 pb-2">
+                                            <div class="card-1">
+                                                <h5 class="common_label_head">
+                                                    {{file.fileType}}
+                                                </h5>
+                                
+                                               <!-- <div class="col-sm-5" style="text-align:center;"><button type="button" class="btn btn-primary" (click)="download(file.fileContent)">Download</button></div>
+                                                <embed [src]="file.fileContent" width="800px" height="2100px" />
+                                             <pdf-viewer [src]="file.fileContent" [render-text]="true" [original-size]="false" style="display: block;"></pdf-viewer> 
+                                              <pdf-viewer [src]="file.fileContent" [original-size]="false"></pdf-viewer> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                   
+                    
+            
+                </div>
+                <div  *ngIf="showResponse" class="form-group" >
+                    <div class="small_text f-12">The following URLs can be used to render the uploaded files.
+                        Please download to view the files. 
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <mat-label><b>Response URL For Advance Directive</b></mat-label>
+                       
+                        <textarea required  [(ngModel)]="detailsText"
+                             name="textrequest" rows="3" matInput 
+                            matAutosizeMinRows=1 matAutosizeMaxRows=100
+                            style="width:1000px; height: 300px;"
+                           ></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="showFhirRequest">
+                    <mat-form-field  appearance="outline">
+                        <mat-label><b>Fhir Request</b></mat-label>
+                    <textarea   [(ngModel)]="this.fhirrequest"
+                     name="textrequest" rows="3" matInput 
+                    matAutosizeMinRows=1 matAutosizeMaxRows=100000
+                    style="width:1000px; height: 100px;"
+                   ></textarea></mat-form-field>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

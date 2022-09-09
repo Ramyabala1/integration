@@ -1,0 +1,51 @@
+
+  
+
+    
+    <div class="container-fluid" appNoRightClick>
+
+        <div class="row">
+            
+            <div class="col-lg-5">
+                <div class="row justify-content-md-center mt-x">
+                  
+                    
+                    <div class="text-center mb-3">
+                        <div class="common_headings"><b>Add In-patient Basic Medical Record </b></div>
+                       
+                        <div class="common_text f-14">
+                          The below text can be edited and click submit to post the treatment of patients already registered.</div>
+                    </div> 
+                        <div class="col-12" style="margin:10px">
+                            <mat-form-field appearance="outline">
+                                <mat-label><b>Request For IPBMR (Edit if required)</b></mat-label>
+                                <textarea required  [(ngModel)]="this.jsonRequest"
+                                     name="textrequest" rows="3" matInput 
+                                    matAutosizeMinRows=1 matAutosizeMaxRows=100000
+                                    style="width:1000px; height: 300px;"
+                                   ></textarea>
+                            </mat-form-field>
+                        </div>
+                            
+                        <div class="text-center col-12" style="margin:10px">
+                            <button type="button" style="margin:10px" (click)="back()">Dashboard</button>
+                            <button type="submit" style="margin:10px" mat-raised-button 
+                                (click)="save()">Add Treatment</button>
+                        </div>   
+                                  
+                        <div class="col-lg-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Response </mat-label>
+                                <input required nameOnly  [(ngModel)]="this.message" class="text-danger"
+                                    matInput placeholder="">
+                            </mat-form-field>
+                        </div>
+                     
+                        
+                   
+                </div>
+            </div>
+        </div>
+        
+    </div>
+

@@ -1,0 +1,109 @@
+<div class="container-fluid" appNoRightClick>
+
+    <div class="row">
+        
+        <div class="col-lg-5">
+            <div class="row justify-content-md-center mt-x">
+              
+                
+                <div class="text-center mb-3">
+                    <div class="common_headings"><b>Create HIU User </b></div>
+                   
+                    <div class="common_text f-14">
+                     HIU users must be registered with EMANAS at KSDC firewal level to access API's</div>
+                </div> 
+    <mat-card class="mb-15">
+       
+           
+                <form #hiuUserForm="ngForm" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+                   
+                    <div class="card mt-3">
+                    <div class="row mb-2 backsides">
+                        <div class="col-md-12">
+                            <mat-form-field required appearance="outline">
+                                <mat-label>HIU Username</mat-label>
+                                <input required [(ngModel)]="hiuUser.userName" 
+                                maxlength="150" name="Username" matInput
+                                > </mat-form-field>
+                                
+                        </div>
+
+                        <div class="col-md-12">
+                            <mat-form-field required appearance="outline">
+                                <mat-label>HIU Password</mat-label>
+                                <input required [(ngModel)]="hiuUser.password" 
+                                maxlength="150" name="Password" matInput
+                                > </mat-form-field>
+                                
+                        </div>
+
+                        <div class="col-md-12">
+                            <mat-form-field required appearance="outline">
+                                <mat-label>Assign MHE USername</mat-label>
+                                <input required [(ngModel)]="hiuUser.mheUserName" 
+                                maxlength="150" name="Mhe Username" matInput
+                                > </mat-form-field>
+                                
+                        </div>
+
+                        <div class="col-md-12">
+                            <mat-form-field required appearance="outline">
+                                <mat-label>Assign MHE Password</mat-label>
+                                <input required [(ngModel)]="hiuUser.mhePassword" 
+                                maxlength="150" name="Mhe Password" matInput
+                                > </mat-form-field>
+                                
+                        </div>
+
+                        <div class="col-md-12">
+                            <mat-form-field required appearance="outline">
+                                <mat-label> MHE Org Name</mat-label>
+                                <input  required [(ngModel)]="hiuUser.mheOrgname" 
+                                maxlength="150" name="Mhe OrgName" matInput
+                                > </mat-form-field>
+                                
+                        </div>
+
+                       
+                       
+                       
+                                        
+
+                                      
+                                       
+
+                     </div>     
+                    </div>
+
+                   
+
+                   
+
+                    
+                   
+                       
+
+
+                        
+
+                        
+
+                       
+                        
+                   
+                    <div class="text-center" style="margin: 10px;">
+                        <button mat-raised-button class="btn-secondary mr-2" (click)="cancel()">back</button>
+                        <button type="submit" [disabled]="hiuUserForm.invalid" mat-raised-button class="btn-secondary mr-2"
+                            (click)="save()">Save</button>
+                    </div>
+                   
+                </form>
+           
+           
+        
+    </mat-card>
+</div>
+</div>
+</div>
+
+</div>

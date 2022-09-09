@@ -1,0 +1,25 @@
+.title_mhms {
+    font-size: 1.5rem;
+    color: #fff;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+img {
+    width: 80%;
+}
+
+ol.li {
+    font-size: 15px;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    color: #242424;
+}
+
+.container {
+    max-width: 79% !important;
+    padding-top: 1rem !important;
+}
+
+.f-24 {
+    font-size: 24px !important;
+}

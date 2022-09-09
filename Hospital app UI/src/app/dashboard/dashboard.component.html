@@ -1,0 +1,146 @@
+<div class="container-fluid" appNoRightClick>
+    <div class="row justify-content-md-center mt-x">
+        <div class="col-md-10 ">
+            <div class=" text-right mb-3">
+                <!-- <a class="common_headings f-12" routerLink="/" routerLinkActive="active"> -->
+                <a class="text-blue">
+                    <img src="assets/personimg.svg" class="person_icon">
+                    <!-- <mat-icon class="sidebar_icon1">person</mat-icon> -->
+                </a>
+                <a class="common_headings f-12" (click)="logOut()">
+                    <p class="small_text_link"> <u> logout </u></p>
+                </a>
+            </div>
+            <div class="cardbor">
+                <div class="text-center mb-2">
+                    <div class="common_headings_top">Welcome {{reqName}}</div>
+                </div>
+                <div class="text-center mb-3">
+                    <div class="common_headings">List of Operations</div>
+                    <!-- <p class="small_text f-12 mt-2">You need consent from patient to read visit history or add records. OTP will be sent to patient's registered mobile number. </p> -->
+                </div>
+                <br />
+                <div class="text-center">
+                    <div class="row">
+                        <!-- <div class="col-lg-4">
+                            <a class="common_headings f-12" routerLink="/addPatient" [state]="{name:'ADDPATIENT',permission:'STORE'}" routerLinkActive="active">
+                                <img src="assets/images/dashboard/OPForm_Icon.svg" width="150" alt="OP Form" />
+                                <br /> New Patient Registration </a>
+                            <a class="common_headings f-12" routerLink="/addPatient" routerLinkActive="active">
+                                <p class="small_text_link"><u>(click here to generate e-Manas ID <br/> for new patient)</u> </p>
+                            </a>
+                        </div> -->
+                        <div class="col-lg-4">
+                            <a class="common_headings f-12" (click)="addPatientButton()">
+                                <img src="assets/images/dashboard/OPForm_Icon.svg" width="150" alt="OP Form" />
+                                <br /> New Patient Registration </a>
+                            <a class="common_headings f-12" (click)="addPatientButton()">
+                                <p class="small_text_link"><u>(click here to generate e-Manas ID <br/> for new patient)</u> </p>
+                            </a>
+                        </div>
+                        <!-- <div class="col-lg-3">
+                            <a class="common_headings f-12" routerLink="/consentrequest" [state]="{name:'OPFORM',permission:'STORE'}" routerLinkActive="active">
+                                <img src="assets/images/dashboard/OPForm_Icon.svg" width="150" alt="OP Form" />
+                                <br /> OP Form </a>
+                            <a class="common_headings f-12" routerLink="/opForm" routerLinkActive="active">
+                                <p class="small_text_link"> <u> (click here if you have consent <br />to add Out-Patient Record)</u></p>
+                            </a>
+                        </div>
+                        <div class="col-lg-3">
+                            <a class="common_headings f-12" routerLink="/consentrequest" [state]="{name:'IPFORM',permission:'STORE'}" routerLinkActive="active">
+                                <img src="assets/images/dashboard/IPForm_Icon.svg" width="150" alt="IP Form" />
+                                <br /> IP Form </a>
+                            <a class="common_headings f-12" routerLink="/addIP" routerLinkActive="active">
+                                <p class="small_text_link"> <u> (click here if you have consent <br />to add In-Patient Record)</u></p>
+                            </a>
+                        </div> -->
+                        <!-- <div class="col-lg-4">
+                            <a class="common_headings f-12" routerLink="/consentrequest" [state]="{name:'GETBMR',permission:'VIEW'}" routerLinkActive="active">
+                                <img src="assets/images/dashboard/PatientRecords_Icon.svg" width="150" alt="Patient Records" />
+                                <br /> Consent Request</a>
+                            <a class="common_headings f-12" routerLink="/consentrequest" [state]="{name:'GETBMR',permission:'VIEW'}" routerLinkActive="active">
+                                <p class="small_text_link"><u>(click here for creating consent <br/> to view patient records)</u> </p>
+                            </a>
+                        </div> -->
+                        <div class="col-lg-4">
+                            <a class="common_headings f-12" (click)="addConsentReq()">
+                                <a routerLink="/consentrequest" [state]="{name:'GETBMR',permission:'VIEW'}" routerLinkActive="active">
+                                    <img src="assets/images/dashboard/PatientRecords_Icon.svg" width="150" alt="Patient Records" />
+                                    <br /> Consent Request</a>
+                            </a>
+                            <a class="common_headings f-12" (click)="addConsentReq()">
+                                <p class="small_text_link"><u>(click here for creating consent <br/> to view patient records)</u> </p>
+                            </a>
+                        </div>
+                        <!-- <div class="col-lg-4">
+                            <a class="common_headings f-12" routerLink="/get-BMR" [state]="{name:'GETBMR',permission:'VIEW'}" routerLinkActive="active">
+                                <img src="assets/images/dashboard/Restraint_monitoring.svg" width="150" alt="Patient Records" />
+                                <br /> View Patient Records</a>
+                            <a class="common_headings f-12" routerLink="/get-BMR" routerLinkActive="active">
+                                <p class="small_text_link"><u>(click here if you have consent <br/> to view records)</u> </p>
+                            </a>
+                        </div> -->
+                        <div class="col-lg-4">
+                            <a class="common_headings f-12" (click)="getBmrData()">
+                                <img src="assets/images/dashboard/Restraint_monitoring.svg" width="150" alt="Patient Records" />
+                                <br /> View Patient Records</a>
+                            <a class="common_headings f-12" (click)="getBmrData()">
+                                <p class="small_text_link"><u>(click here if you have consent <br/> to view records)</u> </p>
+                            </a>
+                        </div>
+
+                        <!-- <div class="col-lg-3">
+                                          <a class="common_headings f-12" routerLink="/consentrequest" [state]="{name:'DISCHARGE',permission:'STORE'}" routerLinkActive="active">
+                                        
+                                          <img src="assets/images/dashboard/IPForm_Icon.svg" width="150" alt="IP Discharge Form"/>
+                                          <br />
+                                          IP Discharge</a>
+                                          <a class="common_headings f-12" routerLink="/discharge"  routerLinkActive="active">
+                                         
+                                          <p class="small_text_link">  <u>(click here if you have consent <br />to add In-Patient Discharge Record)</u></p></a>
+                                      </div> -->
+                        <!-- <div class="col-lg-3">
+                            <a class="common_headings f-12" routerLink="/consentrequest" [state]="{name:'RESTRAINT',permission:'STORE'}" routerLinkActive="active">
+                                <img src="assets/images/dashboard/Restraint_monitoring.svg" width="150" alt="RESTRAINT Form" />
+                                <br /> Restraint Monitoring Form </a>
+                            <a class="common_headings f-12" routerLink="/restraint" routerLinkActive="active">
+    
+                                <p class="small_text_link"> <u> (click here if you have consent <br />to add Restraint Monitoring)</u></p>
+                            </a>
+                        </div>
+                        <div class="col-lg-3">
+                            <a class="common_headings f-12" routerLink="/consentrequest" [state]="{name:'ASSESSMENT',permission:'STORE'}" routerLinkActive="active">
+                                <img src="assets/images/dashboard/Assessment.svg" width="150" alt="ASSESSMENT Form" />
+                                <br /> Assessment </a>
+                            <a class="common_headings f-12" routerLink="/assessment" routerLinkActive="active">
+    
+                                <p class="small_text_link"> <u> (click here if you have consent <br />to add Assessment)</u></p>
+                            </a>
+                        </div>
+                        <div class="col-lg-3">
+                            <a class="common_headings f-12" routerLink="/consentrequest" [state]="{name:'THERAPY',permission:'STORE'}" routerLinkActive="active">
+                                <img src="assets/images/dashboard/Therapy.svg" width="150" alt="THERAPHY Form" />
+                                <br /> Therapy </a>
+                            <a class="common_headings f-12" routerLink="/therapy" routerLinkActive="active">
+    
+                                <p class="small_text_link"> <u> (click here if you have consent <br />to add therapy)</u></p>
+                            </a>
+                        </div>
+    
+                        <div class="col-lg-3">
+                            <a class="common_headings f-12" routerLink="/consentrequest" [state]="{name:'AD',permission:'VIEW'}" routerLinkActive="active">
+    
+                                <img src="assets/images/dashboard/AdvanceDirectives_Icon.svg" width="150" alt="Advance Directives" />
+                                <br /> Get Advance Directives</a>
+                            <a class="common_headings f-12" routerLink="/ad" routerLinkActive="active">
+    
+                                <p class="small_text_link"> <u>(click here if you have consent to view Advance<br /> directives)</u></p>
+                            </a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
