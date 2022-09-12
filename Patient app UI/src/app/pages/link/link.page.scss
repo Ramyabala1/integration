@@ -1,0 +1,36 @@
+ion-header {
+  height: 125px;
+  background-color: #5f175f;
+}
+
+.label1 {
+  position: absolute;
+  display: flex;
+  color: #fdf2fd;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 25px;
+  margin-left: 60px;
+  height: 36px;
+  margin-top: 70px;
+  line-height: 33px;
+}
+
+.button1 {
+  margin-left: 55%;
+  --background: var(--ion-color-secondary);
+  width: 40%;
+}
+
+.img1 {
+  width: 50px;
+  height: 20px;
+  margin-top: 78px;
+}
+
+.img2 {
+  width: 70px;
+  height: 20px;
+  margin-top: 10px;
+}

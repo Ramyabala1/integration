@@ -1,0 +1,23 @@
+<ion-header>
+
+    <ion-img style="border-radius: 10px;" src="assets/header.png" class="menu1"></ion-img>
+    <ion-label class="menu2">OTP</ion-label>
+    <ion-img src="assets/close.png" class="menu" (click)="home()"></ion-img>
+
+
+    <ion-item style="margin-top: 55px; margin-left: 15px; width: 300px;">
+        <ion-label class="label1">Enter Otp *</ion-label>
+    </ion-item>
+
+    <ion-item class="pass">
+        <ion-input [(ngModel)]="otp">
+
+        </ion-input>
+    </ion-item>
+    <div class="row">
+        <div class="col text-center">
+            <ion-button class="button" (click)="add()" (click)="add1()">Submit</ion-button>
+        </div>
+    </div>
+
+</ion-header>

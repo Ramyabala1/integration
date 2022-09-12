@@ -1,0 +1,216 @@
+<ion-header>
+    <ion-label class="label1" style="color: white;">Consent Details </ion-label>
+    <ion-img class="img1" src="assets/back.png" (click)="back()"></ion-img>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-card-content style="background: #fff;">
+            <h1 class="common_label_head">Select ID</h1>
+            eManas id
+            <ion-item class="pass">
+                <ion-input [(ngModel)]="emanasId" class="inputStyle"></ion-input>
+            </ion-item>
+            Auth service
+            <ion-item class="pass">
+                <ion-select class="inputSelect" [(ngModel)]="authService" (ionChange)="onChange()">
+                    <ion-select-option value="emanas" style="color: black;">eManas id</ion-select-option>
+                    <ion-select-option value="mosip" style="color: black;">Mosip id</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-row>
+                <ion-col>
+                    <ion-item class="pass1" [hidden]="!value">
+                        <ion-input type="text" [(ngModel)]="uin" placeholder="UIN/VID number" class="inputStyle">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item class="pass2" [hidden]="!value">
+                        <ion-select [(ngModel)]="otpChannel" placeholder="OTP channel">
+                            <ion-select-option value="PHONE">Mobile</ion-select-option>
+                            <ion-select-option value="EMAIL">Email</ion-select-option>
+                            <ion-select-option value="EMAIL,PHONE">Both</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <h1 class="common_label_head">Consent Details</h1>
+            Purpose
+            <ion-list>
+                <ion-item *ngFor="let checkboxes of Checkboxes">
+                    <ion-label>{{checkboxes.value}}</ion-label>
+                    <ion-checkbox slot="start" [(ngModel)]="checkboxes.isItemChecked"
+                        (ionChange)="verifyEvent(checkboxes.value, $event)">
+                    </ion-checkbox>
+                </ion-item>
+            </ion-list>
+
+
+            <!-- <ion-row>
+                <ion-col>
+                    <ion-item class="pass4">
+                        <ion-label>OPBMR</ion-label>
+                        <ion-checkbox></ion-checkbox>
+                    </ion-item>
+                    <ion-item class="pass4">
+                        <ion-label>IPBMR</ion-label>
+                        <ion-checkbox></ion-checkbox>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item class="pass4">
+                        <ion-label>Therapy </ion-label>
+                        <ion-checkbox></ion-checkbox>
+                    </ion-item>
+                    <ion-item class="pass4">
+                        <ion-label>Restraint</ion-label>
+                        <ion-checkbox></ion-checkbox>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item class="pass5">
+                        <ion-label>Assessment</ion-label>
+                        <ion-checkbox></ion-checkbox>
+                    </ion-item>
+                </ion-col>
+            </ion-row> -->
+            Permission
+            <ion-item class="pass">
+                <ion-select class="inputSelect" [(ngModel)]="permission">
+                    <ion-select-option value="View">View</ion-select-option>
+                    <ion-select-option value="Create">Create</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            Virtual Folder
+            <ion-item class="pass">
+                <select [(ngModel)]="virtual" (click)="getCompositionId()" style="width: 95%;">
+                    <ion-label>VF Name</ion-label>
+                    <option *ngFor="let list of res1">{{ list['episodeId'] }}</option>
+                </select>
+            </ion-item>
+
+            Health Data
+            <ion-item class="pass">
+                <select [(ngModel)]="compid" style="width: 95%;">
+                    <ion-label>Health Data Name</ion-label>
+                    <option *ngFor="let list of resnewArray" value8="list">{{ list['compositionId'] }}</option>
+                </select>
+            </ion-item>
+            Health Resource Provider
+            <ion-item class="pass">
+                <ion-input [(ngModel)]="estName" class="inputStyle"></ion-input>
+            </ion-item>
+            Health Information User
+            <ion-item class="pass">
+                <ion-select class="inputSelect" [(ngModel)]="hiu" (ionChange)="onChange1()">
+                    <ion-select-option value1="Individual" style="color: black;">Individual</ion-select-option>
+                    <ion-select-option value2="Role" style="color: black;">Role</ion-select-option>
+                    <ion-select-option value3="Establishment" style="color: black;">Establishment</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-row [hidden]="!value1">
+                <ion-col>
+                    Individual ID
+                </ion-col>
+            </ion-row>
+            <ion-item style="margin-top: 5px;" class="pass" [hidden]="!value1">
+                <ion-input [(ngModel)]="individualid" class="inputStyle"></ion-input>
+            </ion-item>
+            <ion-row [hidden]="!value1">
+                <ion-col>
+                    Individual Name
+                </ion-col>
+            </ion-row>
+            <ion-item style="margin-top: 5px;" class="pass" [hidden]="!value1">
+                <ion-input [(ngModel)]="name" class="inputStyle"></ion-input>
+            </ion-item>
+            <ion-row [hidden]="!value1">
+                <ion-col>
+                    Role
+                </ion-col>
+            </ion-row>
+            <ion-item style="margin-top: 5px;" class="pass" [hidden]="!value1">
+                <ion-input [(ngModel)]="role" class="inputStyle"></ion-input>
+            </ion-item>
+            <ion-row [hidden]="!value1">
+                <ion-col>
+                    Establishment
+                </ion-col>
+            </ion-row>
+            <ion-item style="margin-top: 5px;" class="pass" [hidden]="!value1">
+                <ion-input [(ngModel)]="establishment" class="inputStyle"></ion-input>
+            </ion-item>
+
+            <ion-row [hidden]="!value2">
+                <ion-col>
+                    Role d
+                </ion-col>
+            </ion-row>
+            <ion-item style="margin-top: 5px;" class="pass" [hidden]="!value2">
+                <ion-input [(ngModel)]="role" class="inputStyle"></ion-input>
+            </ion-item>
+            <ion-row [hidden]="!value2">
+                <ion-col>
+                    Establishment
+                </ion-col>
+            </ion-row>
+            <ion-item style="margin-top: 5px;" class="pass" [hidden]="!value2">
+                <ion-input [(ngModel)]="establishment" class="inputStyle"></ion-input>
+            </ion-item>
+
+            <ion-row [hidden]="!value3">
+                <ion-col>
+                    Establishment
+                </ion-col>
+            </ion-row>
+            <ion-item style="margin-top: 5px;" class="pass" [hidden]="!value3">
+                <ion-input [(ngModel)]="establishment" class="inputStyle"></ion-input>
+            </ion-item>
+
+            Validity Type
+            <ion-item class="pass">
+                <ion-select class="inputSelect" (ionChange)="onChange2()" [(ngModel)]="validity">
+                    <ion-select-option value4="Duration" style="color: black;">Duration</ion-select-option>
+                    <ion-select-option value5="Event" style="color: black;">Event</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-row [hidden]="!value4">
+                <ion-col>
+                    Create Date
+                </ion-col>
+                <ion-col>
+                    Validity End Date
+                </ion-col>
+            </ion-row>
+            <ion-row [hidden]="!value4">
+                <ion-col>
+                    <ion-item class="pass3">
+                        <ion-input [(ngModel)]="createdate" class="inputStyle" type="Date"></ion-input>
+                    </ion-item>
+                    <ion-item class="pass3">
+                        <ion-input [(ngModel)]="validityenddate" class="inputStyle" type="Date"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row [hidden]="!value5">
+                <ion-col>
+                    Event Name
+                </ion-col>
+            </ion-row>
+            <ion-item style="margin-top: 10px;" class="pass" [hidden]="!value5">
+                <ion-input class="inputStyle"></ion-input>
+            </ion-item>
+
+            <ion-button class="button1" (click)="create()">
+                Create Consent
+            </ion-button>
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>

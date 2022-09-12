@@ -1,0 +1,125 @@
+
+#label2{
+  display: flex;
+  justify-content: center;
+  color: rgb(46, 45, 45);
+  font-family: Poppins;
+  font-style:normal;
+  font-weight: 1000;
+}
+#button2{
+  display: inline-block;
+  border-radius: 50px;
+  display: flex;
+  margin-right: 100px;
+  margin-left: 90px;
+  justify-content: center;
+  color: #813D7E;
+  --background:var(--ion-color-secondary-contrast);
+  font-weight: bold;
+}
+.img2{
+  width: 20px;
+  height: 20px;
+}
+
+#details{
+  color: #813D7E;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-top: 20px;
+  font-size: medium;
+}
+
+ion-header{
+  height: 250px;
+  background-color: #f0cdee;
+}
+#mosip{
+  height: 40px;
+  margin-top: 30px;
+  margin-right: 150px;
+}
+#ehrc{
+  height: 40px;
+  margin-top: 30px;
+  margin-left: 150px;
+}
+#label1{
+  font-size: xx-large;
+  display: flex;
+  justify-content: center;
+  color: #813D7E;
+  font-family: Poppins;
+  font-weight: 600;
+  font-style: normal;
+}
+#health{
+  display: flex;
+  justify-content: center;
+  height: 110px;
+}
+
+#button1{
+  display: inline-block;
+  border-radius: 50px;
+  display: flex;
+  margin-right: 100px;
+  margin-left: 100px;
+  justify-content: center;
+  color: #f7f1f6;
+  --background:var(--ion-color-secondary);
+}
+
+.pass{
+  margin-top: 10px;
+  margin-left: 5%;
+  margin-right: 10%;
+  width: 90%;
+  height: 45px;
+  display: inline-block;
+  border-radius: 5px;
+  border-style:groove;
+}
+.pass1{
+  width: 110%;
+  margin-left: 8%;
+  display: inline-block;
+  border-radius: 5px;
+  border-style:groove;
+  font-size: small;
+  height: 45px;
+}
+.pass2{
+  margin-left: 17%;
+  width: 75%;
+  display: inline-block;
+  border-radius: 5px;
+  border-style:groove;
+  font-size: small;
+  height: 45px;
+}
+
+.danger{
+  font-size: medium;
+  font-weight: bold;
+  color: red;
+  display: flex;
+  justify-content: center;
+}
+.danger1{
+  font-size: small;
+  font-weight: bold;
+  color: red;
+  display: flex;
+  justify-content: center;
+}
+.img3{
+  width: 40px;
+  height: 40px;
+}
+
+
+

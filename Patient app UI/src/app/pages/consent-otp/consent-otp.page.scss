@@ -1,0 +1,52 @@
+ion-header {
+  background-color: white;
+  color: white;
+  margin-top: 200px;
+  margin-left: 5%;
+  width: 90%;
+  border-radius: 5px;
+  height: 250px;
+}
+.menu{
+  position:absolute;
+  width: 3%;
+  margin-top: 4%;
+  margin-left: 90%;
+}
+.menu1{
+  position: absolute;
+  width: 100%;
+
+}
+.menu2{
+  position:absolute;
+  width: 100%;
+  margin-top: 2%;
+  margin-left: 7%;
+}
+.pass {
+  margin-left: 7%;
+  margin-right: 10%;
+  width: 85%;
+  height: 45px;
+  display: inline-block;
+  border-radius: 5px;
+  border-style: groove;
+}
+.container{
+  height: 40%;
+  width: 80%;
+  margin-top: 50%;
+  margin-bottom: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.button{
+  height: 40px;
+  width: 20%;
+  margin-top: 30px;
+  color: white;
+  --background:var(--ion-color-secondary);
+  border-radius: 5px;
+
+}

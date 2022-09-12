@@ -1,0 +1,103 @@
+ion-header {
+    height: 100px;
+    background-color: #5f175f;
+}
+
+.label1 {
+    position: absolute;
+    display: flex;
+    color: #fdf2fd;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 25px;
+    margin-left: 50px;
+    height: 36px;
+    margin-top: 50px;
+    line-height: 33px;
+}
+
+.img1 {
+    width: 50px;
+    height: 20px;
+    margin-top: 58px;
+}
+
+.img2 {
+    width: 25%;
+    height: 30%;
+    margin-bottom: 20px;
+}
+
+.img3 {
+    width: 40%;
+    margin-top: 20px;
+}
+
+.pass {
+    width: 100%;
+    display: inline-block;
+    border-radius: 5px;
+    border-style: groove;
+    height: 40px;
+}
+
+.pass3 {
+    width: 50%;
+    display: inline-block;
+    border-radius: 5px;
+    border-style: groove;
+    height: 40px;
+}
+
+.pass4 {
+    width: 50%;
+    display: inline-block;
+    height: 40px;
+}
+
+.pass5 {
+    width: 55%;
+    display: inline-block;
+    height: 40px;
+}
+
+.pass1 {
+    width: 110%;
+    display: inline-block;
+    border-radius: 5px;
+    border-style: groove;
+    font-size: small;
+    height: 45px;
+}
+
+.pass2 {
+    margin-left: 10%;
+    width: 95%;
+    display: inline-block;
+    border-radius: 5px;
+    border-style: groove;
+    font-size: small;
+    height: 45px;
+}
+
+.button1 {
+    color: #f7f1f6;
+    --background: var(--ion-color-secondary);
+}
+
+.common_heading,
+.common_label_head {
+    color: #7175CC;
+    font-weight: 600;
+}
+
+.inputStyle {
+    color: black;
+}
+
+.inputSelect {
+    width: 300px;
+    margin-left: 20px;
+    color: black;
+}

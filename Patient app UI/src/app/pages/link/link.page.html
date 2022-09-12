@@ -1,0 +1,30 @@
+<ion-header>
+
+    <ion-label class="label1" style="color: white;">Link Record </ion-label>
+    <ion-img class="img1" src="assets/back.png" (click)="home()"></ion-img>
+</ion-header>
+
+<ion-content style="size: 100%;">
+    <div *ngIf="Record" class="showInputField">
+        <ion-list inset *ngFor="let list of res1">
+            <ion-list-header>Hospital Name: {{list['healthcareEstablishment']}}</ion-list-header>
+            <ion-item>Doctor Name: {{list['healthProfessionalName']}}</ion-item>
+            <ion-item>Shared health Record on: {{list['createDate']}}</ion-item>
+
+            <ion-card-content>
+                <ion-button id="button2">Unlink Establishment</ion-button>
+            </ion-card-content>
+        </ion-list>
+        <ion-button class="button1" (click)="showAlert()">Link Healthcare Establishment</ion-button>
+    </div>
+
+    <div *ngIf="!Record" class="showInputField">
+        <ion-card style="height: 100px; margin-top: 70px;" class="cardcol">
+            <ion-card-content>
+                No record found
+            </ion-card-content>
+        </ion-card>
+        <ion-button class="button1" (click)="showAlert()">Link Healthcare Establishment</ion-button>
+    </div>
+
+</ion-content>

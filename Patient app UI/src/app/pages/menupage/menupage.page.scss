@@ -1,0 +1,41 @@
+ion-header {
+  height: 250px;
+}
+ion-content{
+  --background:var(--ion-color-secondary-contrast);
+}
+.img1{
+  height: 100px;
+}
+.img2{
+  height: 30px;
+  width: 30px;
+  margin-right: 90%;
+  margin-top: 5%;
+}
+.img3{
+  position: absolute;
+  margin-right: 90%;
+}
+ion-button{
+  position: relative;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
+  color: rgb(194, 89, 168);
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  --background:var(--ion-color-success-contrast);
+  --border-radius: 15px;
+}
+.pass{
+  margin-top: 3px;
+  margin-left: 7%;
+  margin-right: 10%;
+  width: 85%;
+  display: inline-block;
+  border-radius: 10px;
+  border-style:groove;
+}

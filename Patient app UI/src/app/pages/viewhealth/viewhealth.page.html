@@ -1,0 +1,203 @@
+<ion-header>
+  <ion-label class="label1" style="color: white">Details </ion-label>
+  <ion-img class="img1" src="assets/back.png" (click)="link()"></ion-img>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="opBmr">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-6>
+          <p>MHP Name :</p>
+        </ion-col>
+        <ion-col col-6>
+          <p id="demo"></p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-6>
+          <p>illesness summary :</p>
+        </ion-col>
+        <ion-col col-6>
+          <p id="demo1"></p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-6>
+          <p>Differential Diagnosis :</p>
+        </ion-col>
+        <ion-col col-6>
+          <p id="demo3"></p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-card-content>
+      <p>Complains & duration :</p>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-6>
+          <p>History :</p>
+        </ion-col>
+        <ion-col col-6>
+          <p id="demo4"></p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-card-content>
+      <p>Additional Notes :</p>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-6>
+          <p>Improvement Status :</p>
+        </ion-col>
+        <ion-col col-6>
+          <p id="demo2"></p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-6>
+          <p>Follow up :</p>
+        </ion-col>
+        <ion-col col-6>
+          <p id="demo5"></p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-card-content class="card1"> </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngFor="let uidata of TherapyArray">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-6>
+          <p><b>MHP Name :</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p id="demo">Dr. {{ uidata.author }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Session Number :</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p id="demo1">{{ uidata.sessionNumber }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-3>
+          <p class="common_text"><b>Therapy Method</b></p>
+        </ion-col>
+        <ion-col col-9>
+          <p class="common_text">{{ uidata.therapyMethod }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p><b>Therapy Type : </b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.therapyType }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Objective Session</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.objective }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Therapy Technique</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.therapyTechnique }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Key Issue</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.keyIssue }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Psychiatric Diagnosis</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.psychiatricDiagnosis }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Follow Up Date</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">
+            {{ uidata.nextSessionDate | date: "dd/MM/yyyy" }}
+          </p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Follow Up Plan</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.nextSession }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Therapist Observation/ Reflections</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.observationReflection }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Therapist Name</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.therapistName }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Therapist Qualification</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.therapistQualification }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Supervisor Name</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.supervisorName }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <p class="common_text"><b>Supervisor Qualification</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <p class="common_text">{{ uidata.supervisorQualification }}</p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

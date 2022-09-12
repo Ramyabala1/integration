@@ -1,0 +1,107 @@
+ion-header {
+    height: 125px;
+    background-color: #5f175f;
+}
+
+ion-button {
+    color: black;
+}
+
+.cardcol {
+    background-color: #fff;
+    color: #fff;
+}
+
+.link {
+    --background: var(--ion-color-secondary);
+    color: white;
+    font-size: smaller;
+    width: 220px;
+}
+
+.label1 {
+    position: absolute;
+    display: flex;
+    color: #fdf2fd;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 25px;
+    margin-left: 60px;
+    height: 36px;
+    margin-top: 70px;
+    line-height: 33px;
+}
+
+.menu {
+    position: absolute;
+    display: flex;
+    color: #fdf2fd;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 25px;
+    margin-left: 10px;
+    height: 20px;
+    margin-top: 75px;
+    line-height: 33px;
+}
+
+.menu1 {
+    position: absolute;
+    height: 70px;
+    width: 70px;
+}
+
+.menu2 {
+    position: absolute;
+    height: 75px;
+    width: 30px;
+    margin-left: 20px;
+}
+
+.menu4 {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    margin-left: 82.50%;
+    margin-top: 25px;
+    border-radius: 25px;
+}
+
+.label2 {
+    position: absolute;
+    width: 174px;
+    height: 23px;
+    left: 100px;
+    top: 40px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: black;
+}
+
+.label3 {
+    position: absolute;
+    display: flex;
+    color: black;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 70;
+    font-size: 20px;
+    margin-left: 30px;
+    margin-top: 5px;
+    line-height: 33px;
+}
+
+#mosip {
+    height: 60px;
+    margin-right: 100px;
+}
+
+#ehrc {
+    height: 60px;
+    margin-left: 100px;
+}

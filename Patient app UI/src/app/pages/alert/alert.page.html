@@ -1,0 +1,38 @@
+<ion-header>
+
+    <ion-img style="border-radius: 10px;" src="assets/header.png" class="menu1"></ion-img>
+    <ion-label class="menu2">{{message}}</ion-label>
+    <ion-img src="assets/close.png" class="menu" (click)="home()"></ion-img>
+
+
+    <ion-item style="margin-top: 55px;">
+        <ion-label class="label1">Health Information Provider *</ion-label>
+    </ion-item>
+
+    <!-- <ion-searchbar type="text" [(ngModel)]="orgName" debounce="500" (ionChange)="onChangeSearch(orgName)"></ion-searchbar>
+    <ion-list *ngIf="isItemAvailable">
+        <ion-item *ngFor="let item of adRes">{{ item.displayname }}</ion-item>
+    </ion-list> -->
+
+    <div class="pass">
+        <ng-autocomplete [(ngModel)]="orgName" [data]="data" [searchKeyword]="keyword"
+            (inputChanged)='onChangeSearch(orgName)' [itemTemplate]="itemTemplate"
+            [notFoundTemplate]="notFoundTemplate">
+        </ng-autocomplete>
+
+        <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.displayname"></a>
+        </ng-template>
+
+        <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+        </ng-template>
+    </div>
+
+    <div class="row">
+        <div class="col text-center">
+            <ion-button class="button" (click)="get()">Next</ion-button>
+        </div>
+    </div>
+
+</ion-header>

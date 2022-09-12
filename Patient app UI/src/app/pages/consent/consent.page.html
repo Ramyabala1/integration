@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-label class="label1" style="color: white;">Consent Details </ion-label>
+    <ion-img class="img1" src="assets/back.png" (click)="home()"></ion-img>
+</ion-header>
+
+<ion-content>
+    <ion-button class="button1" (click)="next()">
+        Create Consent
+    </ion-button>
+    <div class="showInputField">
+        <ion-list inset *ngFor="let list of res1">
+            <ion-list-header>Hospital Name: {{list.artifactObj.consentParameters.hiu.individualName}}</ion-list-header>
+            <ion-item>Permission: {{list.artifactObj.consentParameters.permission}}</ion-item>
+            <ion-item>Purpose: {{list.artifactObj.consentParameters.purpose}}</ion-item>
+
+            <ion-card-content>
+                <ion-button (click)="revoke(list)" id="button3">Revoke</ion-button>
+                <ion-button (click)="updateConsent(list)" id="button3">Update Consent</ion-button>
+            </ion-card-content>
+        </ion-list>
+    </div>
+
+</ion-content>

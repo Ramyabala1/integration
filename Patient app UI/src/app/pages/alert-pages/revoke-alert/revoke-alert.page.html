@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-img style="border-radius: 10px" src="assets/header.png" class="menu1"></ion-img>
+  <ion-label class="menu2">Revoke Details</ion-label>
+  <ion-img src="assets/close.png" class="menu" (click)="home()"></ion-img>
+
+  <div>
+    <ion-card style="margin-top: 55px">
+      <ion-card-content>
+        Do you want to revoke this consent from
+      </ion-card-content>
+    </ion-card>
+
+    <div class="row">
+      <div class="col text-center">
+        <ion-button class="button" (click)="cancel()">No</ion-button>
+      </div>
+      <div class="col text-center">
+        <ion-button class="button" (click)="clickedPlus2($event)">Yes</ion-button>
+      </div>
+    </div>
+    <!-- <ion-item class="pass" *ngIf="showCard3">
+            <ion-img class="img2" src="assets/authentication.jpg"></ion-img>
+            <ion-select style="width: 320px; margin-left: 20px;" (ionChange)="onChange(authService)" [(ngModel)]="authService" placeholder="Auth Service">
+                <ion-select-option value="EMANAS" style="color: black;">eManas id</ion-select-option>
+                <ion-select-option value="MOSIP" style="color: black;">Mosip id</ion-select-option>
+            </ion-select>
+        </ion-item> -->
+    <ion-item class="pass" *ngIf="showCard3">
+      <ion-img class="img2" src="assets/authentication.jpg"></ion-img>
+      <ion-select style="width: 320px; margin-left: 20px" (ionChange)="onChange(authService)" [(ngModel)]="authService"
+        placeholder="Auth Service">
+        <ion-select-option value="EMANAS" style="color: black">eManas id</ion-select-option>
+        <ion-select-option value="MOSIP" style="color: black">Mosip id</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-item class="pass1" [hidden]="!value">
+          <ion-input type="text" placeholder="Enter UIN/VID number" [(ngModel)]="uin"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item class="pass2" [hidden]="!value">
+          <ion-select [(ngModel)]="otpChannel" placeholder="OTP channel">
+            <ion-select-option value="PHONE">Mobile</ion-select-option>
+            <ion-select-option value="EMAIL">Email</ion-select-option>
+            <ion-select-option value="EMAIL,PHONE">Both</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row>
+            <ion-col>
+                <ion-item [(ngModel)]="uin" class="pass1" [hidden]="!value">
+                    <ion-input type="text" placeholder="Enter UIN/VID number"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item class="pass2" [hidden]="!value">
+                    <ion-select [(ngModel)]="otpChannel" placeholder="OTP channel">
+                        <ion-select-option value="mobile">Mobile</ion-select-option>
+                        <ion-select-option value="email">Email</ion-select-option>
+                        <ion-select-option value="both">Both</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+        </ion-row> -->
+
+    <div class="col text-center" *ngIf="showCard3">
+      <ion-button class="button4" (click)="clickedotpcard($event)" (click)="revokeRequest()">Next</ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="otpcard">
+    <ion-item style="margin-top: 55px; margin-left: 15px; width: 300px">
+      <ion-label class="label1">Enter Otp *</ion-label>
+    </ion-item>
+    <ion-item class="pass">
+      <ion-input [(ngModel)]="otp"> </ion-input>
+    </ion-item>
+    <div class="row">
+      <div class="col text-center">
+        <ion-button class="button" (click)="verifyOtp()">Submit</ion-button>
+      </div>
+    </div>
+  </div>
+</ion-header>

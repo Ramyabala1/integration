@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-row class="row">
+        <ion-col col-6>
+            <ion-img src="assets/EHRC.png" id="ehrc"></ion-img>
+        </ion-col>
+        <ion-col col-6>
+            <ion-img src="assets/mosip.png" id="mosip"></ion-img>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-label id="label1">Patient App</ion-label>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-img src="assets/healthcare.png" id="health"></ion-img>
+        </ion-col>
+    </ion-row>
+</ion-header>
+
+<ion-content>
+    <div>
+        <form [formGroup]="otpForm.getForm()" style="height: 100%;" name="form" action="" method="post" (ngSubmit)="home(otp)">
+            <div>
+                <h3 class="otp">Mobile Verification</h3>
+            </div>
+            <div>
+                <h3 class="otp1">Enter 4 Digit OTP</h3>
+            </div>
+            <small class="danger">{{message}}</small>
+            <div>
+                <ion-item class="pass">
+                    <ion-img id="img2" src="assets/otp.png"></ion-img>
+                    <ion-input formControlName="otp" [(ngModel)]="otp" maxlength="6" style="text-align: center; font-size: 30px; margin-right: 50px;" [type]="passwordType" placeholder="OTP"></ion-input>
+                    <ion-icon name="eye" color="blue" item-end (click)="togglePassword()"></ion-icon>
+                </ion-item>
+            </div>
+            <ion-row>
+                <ion-col text-center>
+                    <ion-button id="button1" type="submit">Verify OTP</ion-button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col text-center>
+                    <ion-button id="button2" fill="clear">Resend OTP</ion-button>
+                </ion-col>
+            </ion-row>
+        </form>
+    </div>
+</ion-content>

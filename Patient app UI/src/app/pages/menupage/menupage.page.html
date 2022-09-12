@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-img src="assets/Home.png" class="img2" (click)="menu()"></ion-img>
+    <ion-img src="assets/avatar.png" class="img1"></ion-img>
+    <ion-item>
+        <ion-label id="label1">eManas Id: {{ emanasId }}</ion-label>
+    </ion-item>
+</ion-header>
+
+<ion-content>
+    <div>
+        <ion-button>
+            <ion-img src="assets/Home.png" class="img3"></ion-img>
+            Home
+        </ion-button>
+        <ion-button>
+            <ion-img src="assets/people.png" class="img3"></ion-img>
+            Manage Family Members
+        </ion-button>
+        <ion-button>
+            <ion-img src="assets/help.png" class="img3"></ion-img>
+            Need Help
+        </ion-button>
+        <ion-button>
+            About eManas
+        </ion-button>
+        <ion-button>
+            <ion-img src="assets/language.png" class="img3"></ion-img>
+            language
+        </ion-button>
+        <ion-button>
+            <ion-img src="assets/lock.png" class="img3"></ion-img>
+            Reset Password
+        </ion-button>
+        <ion-button (click)="logout()">
+            <ion-img src="assets/logout.png" class="img3"></ion-img>
+            Logout
+        </ion-button>
+    </div>
+</ion-content>

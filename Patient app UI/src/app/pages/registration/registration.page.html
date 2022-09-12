@@ -1,0 +1,132 @@
+<ion-header>
+    <ion-row class="row">
+        <ion-col col-6>
+            <ion-img src="assets/EHRC.png" id="ehrc"></ion-img>
+        </ion-col>
+        <ion-col col-6>
+            <ion-img src="assets/mosip.png" id="mosip"></ion-img>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-label id="label1">Patient App</ion-label>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-img src="assets/healthcare.png" id="health"></ion-img>
+        </ion-col>
+    </ion-row>
+</ion-header>
+
+<ion-content>
+    <div class="flex-center">
+        <form [formGroup]="registerForm.getForm()" style="height: 100%;" name="form" action="" method="post" (ngSubmit)="registerTypeuser()">
+            <div>
+                <h3 id="details">Add your details to Sign up</h3>
+            </div>
+            <small class="danger">{{message}}{{message1}}</small>
+            <div>
+                <ion-item class="pass">
+                    <ion-img class="img2" src="assets/authentication.jpg"></ion-img>
+                    <ion-select style="width: 300px; margin-left: 20px;" formControlName="regType" [(ngModel)]="regType" (ionChange)="regTypeChange(regType)" placeholder="Registration Type">
+                        <ion-select-option value="patient" style="color: black;">Patient</ion-select-option>
+                        <ion-select-option value="authorized_entity" style="color: black;">Authorized Entity</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </div>
+
+            <div>
+                <ion-item class="pass">
+                    <ion-img class="img2" src="assets/email.jpg"></ion-img>
+                    <ion-input (change)="clickedPlus($event)" formControlName="emanasId" type="text" placeholder="    Emanas Id" [(ngModel)]="emanasId" [(ngModel)]="emanas" (change)="check()"></ion-input>
+                </ion-item>
+                <small class="danger" *ngIf="showCard">{{message2}}</small>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('emanasId').touched && registerForm.getForm().get('emanasId').errors?.required">Emanas Id is mandatory</ion-label>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('emanasId').touched && registerForm.getForm().get('emanasId').errors?.minlength">Minimum 17 character</ion-label>
+            </div>
+            <div>
+                <ion-item *ngIf="aeIdField" class="pass">
+                    <ion-img class="img2" src="assets/email.jpg"></ion-img>
+                    <ion-input (change)="clickedPlus($event)" formControlName="aeId" type="text" placeholder="   AE Id" [(ngModel)]="aeId" (change)="check()"></ion-input>
+                </ion-item>
+                <small class="danger" *ngIf="showCard">{{message2}}</small>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('emanasId').touched && registerForm.getForm().get('emanasId').errors?.required">Emanas Id is mandatory</ion-label>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('emanasId').touched && registerForm.getForm().get('emanasId').errors?.minlength">Minimum 17 character</ion-label>
+            </div>
+            <div>
+                <ion-item class="pass">
+                    <ion-img class="img2" src="assets/authentication.jpg"></ion-img>
+                    <ion-select style="width: 300px; margin-left: 20px;" formControlName="authService" [(ngModel)]="authService" (ionChange)="onChange(authService)" placeholder="Auth Service">
+                        <ion-select-option value="emanas" style="color: black;">eManas</ion-select-option>
+                        <ion-select-option value="MOSIP" style="color: black;">MOSIP</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-row>
+                    <ion-col>
+                        <ion-item class="pass1" [hidden]="!value">
+                            <ion-input type="text" [(ngModel)]="uin" formControlName="uin" placeholder="Enter UIN/VID number"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item class="pass2" [hidden]="!value">
+                            <ion-select formControlName="otpChannel" [(ngModel)]="otpChannel" placeholder="OTP channel">
+                                <ion-select-option value="PHONE">Mobile</ion-select-option>
+                                <ion-select-option value="EMAIL">Email</ion-select-option>
+                                <ion-select-option value="EMAIL,PHONE">Both</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+
+            </div>
+            <div>
+                <ion-item class="pass">
+                    <ion-img class="img2" src="assets/login.png"></ion-img>
+                    <ion-input (change)="clicked($event)" formControlName="login" type="text" placeholder="    login Id" [(ngModel)]="login" (change)="checkid()"></ion-input>
+                </ion-item>
+                <small class="danger" *ngIf="showCard1">{{message3}}</small>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('login').touched && registerForm.getForm().get('login').errors?.required">Login Id is mandatory</ion-label>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('login').touched && registerForm.getForm().get('login').errors?.minlength">Minimum 6 character</ion-label>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('login').touched && registerForm.getForm().get('login').errors?.pattern">Login Id should be alphanumeric </ion-label>
+            </div>
+            <div>
+                <ion-item class="pass">
+                    <ion-img class="img2" src="assets/password.png"></ion-img>
+                    <ion-input formControlName="password" [type]="passwordType" placeholder="    Password" [(ngModel)]="password" [maxlength]="14"></ion-input>
+                    <ion-icon name="eye" color="blue" item-end (click)="togglePassword()"></ion-icon>
+                </ion-item>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('password').touched && registerForm.getForm().get('password').errors?.required">Password is mandatory</ion-label>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('password').touched && registerForm.getForm().get('password').errors?.minlength">Should be between 8 to 14 Characters</ion-label>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('password').touched && registerForm.getForm().get('password').errors?.pattern">1 symbol & 1 uppercase letter is mandatory</ion-label>
+            </div>
+            <div>
+                <ion-item class="pass">
+                    <ion-img class="img2" src="assets/password.png"></ion-img>
+                    <ion-input formControlName="confirmPassword" [type]="passwordType1" placeholder="   Confirm Password"></ion-input>
+                    <ion-icon name="eye" color="blue" item-end (click)="togglePassword1()"></ion-icon>
+                </ion-item>
+                <ion-label class="danger1" *ngIf="registerForm.getForm().get('confirmPassword').touched && registerForm.getForm().get('confirmPassword').errors?.isntMatching">Password does not match</ion-label>
+            </div>
+            <ion-row>
+                <ion-col text-center>
+                    <ion-button id="button1" type="submit">Sign up</ion-button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col text-center>
+                    <ion-label id="label2">Already Have an Account?</ion-label>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col text-center>
+                    <ion-button id="button2" fill="clear" (click)="loginPage()">Login</ion-button>
+                </ion-col>
+            </ion-row>
+
+        </form>
+
+    </div>
+
+</ion-content>

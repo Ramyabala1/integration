@@ -1,0 +1,18 @@
+<ion-header>
+
+  <ion-label class="label1" style="color: white;">Health Records </ion-label>
+  <ion-img class="img1" src="assets/back.png" (click)="home()"></ion-img>
+</ion-header>
+
+<ion-content>
+  <ion-card-content>
+    <div class="showInputField">
+      <ion-list inset *ngFor="let list of resnewArray">
+        <ion-list-header>{{list['compositionId']}} : {{list['name']}}</ion-list-header>
+        <ion-card-content>
+          <ion-button (click)="viewDetails(list)" id="button2">View Details</ion-button>
+        </ion-card-content>
+      </ion-list>
+    </div>
+  </ion-card-content>
+</ion-content>

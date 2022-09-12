@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-label class="label1" style="color: white;">Access History </ion-label>
+    <ion-img class="img1" src="assets/back.png" (click)="back()"></ion-img>
+    <!-- <ion-img class="img1" src="" (click)="back()"></ion-img> -->
+</ion-header>
+
+<ion-content>
+    <ion-card *ngIf="accessHistoryCard" style="margin-top: 70px;" class="cardcol">
+        <ion-card-content>
+            The request for activity {{activity}} on health resource {{healthResource}} stored at {{hip}} was sent by {{healthProfessionalName}} from {{hiu}} on {{createDate}}. Status: {{statuscode}}
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="!accessHistoryCard" style="margin-top: 70px;" class="cardcol">
+        <ion-card-content>
+            No Record Found
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>

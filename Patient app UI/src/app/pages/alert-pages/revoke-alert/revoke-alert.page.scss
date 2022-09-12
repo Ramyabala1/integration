@@ -1,0 +1,103 @@
+ion-header {
+    background-color: white;
+    color: white;
+    margin-top: 50px;
+    margin-left: 5%;
+    width: 90%;
+    border-radius: 5px;
+    height: auto;
+}
+
+.menu {
+    position: absolute;
+    width: 3%;
+    margin-top: 4%;
+    margin-left: 90%;
+}
+
+.menu1 {
+    position: absolute;
+    width: 100%;
+}
+
+.menu2 {
+    position: absolute;
+    width: 100%;
+    margin-top: 2%;
+    margin-left: 7%;
+}
+
+.menu3 {
+    position: absolute;
+    width: 100%;
+    margin-top: 200%;
+    margin-left: 7%;
+}
+
+.pass {
+    margin-left: 7%;
+    margin-right: 10%;
+    width: 85%;
+    height: 45px;
+    border-radius: 5px;
+    border-style: groove;
+}
+
+.container {
+    height: 40%;
+    width: 80%;
+    margin-top: 50%;
+    margin-bottom: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.button {
+    height: 40px;
+    width: 60%;
+    margin-top: 50px;
+    color: white;
+    --background: var(--ion-color-secondary);
+    border-radius: 5px;
+}
+
+.button4 {
+    height: 40px;
+    width: 40%;
+    color: white;
+    --background: var(--ion-color-secondary);
+    border-radius: 5px;
+}
+
+.label1 {
+    color: black;
+    position: absolute;
+    width: 95%;
+    height: 100px;
+    margin-left: 20px;
+}
+
+.pass1 {
+    width: 110%;
+    margin-left: 8%;
+    display: inline-block;
+    border-radius: 5px;
+    border-style: groove;
+    font-size: small;
+    height: 45px;
+}
+
+.pass2 {
+    margin-left: 17%;
+    width: 75%;
+    display: inline-block;
+    border-radius: 5px;
+    border-style: groove;
+    font-size: small;
+    height: 45px;
+}
+
+.img2 {
+    width: 20px;
+    height: 20px;
+}
